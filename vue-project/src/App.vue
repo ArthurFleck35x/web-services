@@ -21,9 +21,9 @@ import HelloWorld from './components/HelloWorld.vue'
       </nav>
     </div>
   </header>
-
-  <RouterView />
   -->
+  <RouterView />
+  
   <div class="Footer">
     <Footer></Footer>
   </div>

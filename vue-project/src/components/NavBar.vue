@@ -17,8 +17,8 @@
         <!-- Dropdown -->
         <div v-show="menuOpen" class="dropdown">
           <ul>
-            <li @click="closeMenu">Home</li>
-            <li @click="closeMenu">Profile</li>
+            <li @click="closeMenu"><RouterLink to="/" >Home</RouterLink></li>
+            <li @click="closeMenu"><RouterLink to="/about">About</RouterLink></li>
             <li @click="closeMenu">Logout</li>
           </ul>
         </div>
@@ -42,6 +42,7 @@
             }
         }
     };
+    import { RouterLink } from 'vue-router';
 </script>
 
 <style scoped>
