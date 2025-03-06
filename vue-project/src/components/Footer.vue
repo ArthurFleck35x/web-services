@@ -47,7 +47,7 @@ const currentYear = ref(new Date().getFullYear());
     width: 30px;
 }
 .title {
-    font-size: 1.5rem; /* Entspricht "text-2xl" in Tailwind */
+    font-size: 2rem; /* Entspricht "text-2xl" in Tailwind */
     font-weight: bold;
     background: linear-gradient(to right, #22d3ee, #9333ea); /* Farbverlauf von Cyan nach Lila */
     -webkit-background-clip: text; /* Hintergrundclip für den Text */
