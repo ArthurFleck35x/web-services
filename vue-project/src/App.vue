@@ -1,5 +1,6 @@
 <script setup>
 import NavBar from "@/components/NavBar.vue";
+import Footer from "@/components/Footer.vue";
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 </script>
@@ -23,11 +24,17 @@ import HelloWorld from './components/HelloWorld.vue'
 
   <RouterView />
   -->
+  <div class="Footer">
+    <Footer></Footer>
+  </div>
 </template>
 
 <style scoped>
 
 .NavBar {
+  width: 100%;
+}
+.Footer {
   width: 100%;
 }
 /*
