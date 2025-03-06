@@ -17,13 +17,13 @@
 
     <main>
         <section>
-            <div>
+            <div class="section">
                 <div>
                     <Zap size={20}></Zap>
-                    <h2>
+                    <h2>Our Story
                     </h2>
                 </div>
-                <h3>
+                <h3 class="h3">
                     Since 2025
                 </h3>
                 <p>
@@ -52,6 +52,10 @@
     color: white;
     position: relative;
 }
+section div {
+    padding: 1rem;
+    text-align: center;
+}
 
 /* Logo */
 .logo img {
@@ -67,7 +71,12 @@
     -webkit-background-clip: text; /* Hintergrundclip für den Text */
     color: transparent; /* Text transparent machen, damit der Hintergrund sichtbar wird */
 }
-
+h3 {
+    font-size: 1.5rem; /* Anpassen der Schriftgröße */
+    font-weight: bold;
+    color: white; /* Oder eine passende Farbe */
+    text-align: center;
+}
 /*Schrift mittig*/
 .fonts {
     text-align: center;
