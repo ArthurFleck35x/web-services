@@ -1,13 +1,11 @@
 <template >
-<div class="bg-dark2">
-    <div class="navbar bg-special " >
+<div class="bg-dark2 ">
+    <div class="center bg-special" >
         <div>
             <!-- About Us Banner img -->
-            <div class="fonts center">
-                <div>
-                    <h1 >
-                        <span class="title">About UniPlace</span>
-                    </h1>
+            <div class="fonts">
+                <div >
+                    <h1 class="title">About UniPlace</h1>
                     <p>
                         Pioneering of asset trading across the multiverse
                     </p>
@@ -144,7 +142,9 @@ h4 {
 }
 /* Für den Spezialhintergrund */
 .bg-special {
-    background: linear-gradient(to left, #7ee2f1, #a351f0); /* Indigo to Blue-green */
+    background: linear-gradient(to left, #5cbbca,#c59bec); /* Indigo to Blue-green */
     color: white;
+    width: 100%;
+    padding: 1rem;
 }
 </style>
