@@ -1,15 +1,11 @@
 <template>
-    <div>
+    <div class="bg-special" >
         <div>
             <!-- About Us Banner img -->
             <div>
                 <div>
-                    <h1>
-                        <span class="title">About UniPlace</span>
-                    </h1>
-                    <p>
-                        Pioneering of asset trading across the multiverse
-                    </p>
+                    <h1 class="title center" >Fast FAQ</h1>
+                    <p class="center"> Get your answers here!</p>
                 </div>
             </div>
         </div>
@@ -18,12 +14,11 @@
     <main>
         <div>
             <div>
-                <h2>FAQ </h2>
                 <h3>General</h3>
                 <div>
-                    <span>
-                        Question
-                    </span>
+                   <h5>
+                    Question
+                   </h5>
                     <span>
                         Answer
                     </span>
@@ -47,6 +42,10 @@
     color: white;
     position: relative;
 }
+section div {
+    padding: 1rem;
+    text-align: center;
+}
 
 /* Logo */
 .logo img {
@@ -62,7 +61,24 @@
     -webkit-background-clip: text; /* Hintergrundclip für den Text */
     color: transparent; /* Text transparent machen, damit der Hintergrund sichtbar wird */
 }
-
+h4 {
+    font-size: 1rem; /* Anpassen der Schriftgröße */
+    font-weight: bold;
+    color: white; /* Oder eine passende Farbe */
+    text-align: center;
+}
+/*Schrift mittig*/
+.fonts {
+    text-align: center;
+}
+/* Zentriert den Text */
+.center {
+    text-align: center;
+}
+/* weiße Schrift */
+.white {
+    color: white;
+}
 /* Burger-Menü Button */
 .menu-button {
     font-size: 1.8rem;
@@ -102,10 +118,21 @@
     background: linear-gradient(to bottom right, #1a202c, #2d3748, #4a5568); /* Dark Gray to Slate */
     color: white;
 }
+.bg-dark2 {
+    background: linear-gradient(to bottom right, #1a202c, #2d3748); /* Dark Gray to Slate */
+    color: white;
+}
 
 /* Für den Light Mode Hintergrund */
 .bg-light {
     background: linear-gradient(to bottom right, #f7fafc, #ffffff, #edf2f7); /* Light Gray to White */
     color: #1a202c;
+}
+/* Für den Spezialhintergrund */
+.bg-special {
+    background: linear-gradient(to left, #5cbbca,#c59bec); /* Indigo to Blue-green */
+    color: white;
+    width: 100%;
+    padding: 1rem;
 }
 </style>
