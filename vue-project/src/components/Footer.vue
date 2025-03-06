@@ -1,6 +1,6 @@
 <template>
-    <footer class="bg-dark text-white text-center p-4">
-        <div class="container">
+    <footer class="bg-dark bg-light">
+        <div class="bg-dark">
             <div class="row">
                 <!--Logo und Beschreibung-->
                 <div>

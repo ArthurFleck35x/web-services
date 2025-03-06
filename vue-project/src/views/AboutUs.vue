@@ -1,8 +1,8 @@
-<template>
-    <div>
+<template >
+    <div class="navbar bg-special " >
         <div>
             <!-- About Us Banner img -->
-            <div>
+            <div class="fonts">
                 <div>
                     <h1>
                         <span class="title">About UniPlace</span>
@@ -68,6 +68,11 @@
     color: transparent; /* Text transparent machen, damit der Hintergrund sichtbar wird */
 }
 
+/*Schrift mittig*/
+.fonts {
+    text-align: center;
+}
+
 /* Burger-Menü Button */
 .menu-button {
     font-size: 1.8rem;
@@ -112,5 +117,10 @@
 .bg-light {
     background: linear-gradient(to bottom right, #f7fafc, #ffffff, #edf2f7); /* Light Gray to White */
     color: #1a202c;
+}
+/* Für den Spezialhintergrund */
+.bg-special {
+    background: linear-gradient(to left, #7ee2f1, #a351f0); /* Indigo to Blue-green */
+    color: white;
 }
 </style>
