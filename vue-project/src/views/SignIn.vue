@@ -19,7 +19,7 @@
                     <a href="#">Forgot your password? </a>
                 </div>
                 <div>
-                    <input type="text" id="password" name="password" placeholder="********">
+                    <input type="password" id="password" name="password" placeholder="UniPlace123">
                     <Lock></Lock>
                     <button > <!--Eyeoff--></button>
                 </div>

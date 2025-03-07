@@ -1,35 +1,37 @@
 <template>
-    <div class="bg-special" >
-        <div>
-            <!-- About Us Banner img -->
+    <div>
+        <div class="bg-special" >
             <div>
+                <!-- About Us Banner img -->
                 <div>
-                    <h1 class="title center" >Fast FAQ</h1>
-                    <p class="center"> Get your answers here!</p>
+                    <div>
+                        <h1 class="title center" >Fast FAQ</h1>
+                        <p class="center"> Get your answers here!</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <main>
-        <div>
+        <main>
             <div>
-                <h3>General</h3>
                 <div>
-                   <h5>
-                    Question
-                   </h5>
-                    <span>
+                    <h3>General</h3>
+                    <div>
+                    <h5>
+                        Question
+                    </h5>
+                    <p>
                         Answer
-                    </span>
+                    </p>
+                    </div>
+                    <!--für die anderen anpassen-->
+                    <h3>Account</h3>
+                    <h3>Marketplace</h3>
+                    <h3>Support</h3>
                 </div>
-                <!--für die anderen anpassen-->
-                <h3>Account</h3>
-                <h3>Marketplace</h3>
-                <h3>Support</h3>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 </template>
 <style scoped>
 /* Navbar */

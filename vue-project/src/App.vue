@@ -22,7 +22,7 @@ import HelloWorld from './components/HelloWorld.vue'
     </div>
   </header>
   -->
-  <RouterView/>
+  <div class="top"><RouterView/></div>
   
   <div class="Footer">
     <Footer></Footer>
@@ -38,6 +38,9 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 .Footer {
   width: 100%;
+}
+.top{
+  margin-top: 70px;
 }
 /*
 

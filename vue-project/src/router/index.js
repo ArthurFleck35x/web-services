@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AboutUs from '@/views/AboutUs.vue'
 import FAQ from '@/views/FAQ.vue'
 import MarketView from '@/views/MarketView.vue'
+import LogIn from '@/views/LogIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,11 @@ const router = createRouter({
       name: 'market',
       component: MarketView,
     },
+    {
+      path: '/',
+      name: 'logIn',
+      component: LogIn,
+    }
     /*{
       path: '/',
       name: 'home',
