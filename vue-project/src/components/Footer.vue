@@ -13,9 +13,9 @@
                 <div class="col-md-4">
                     <h5 class="fw-bold">Navigation</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="white text-decoration-none">Home</a></li>
-                        <li><a href="#" class="white text-decoration-none">About Us</a></li>
-                        <li><a href="#" class="white text-decoration-none">Fast FAQ</a></li>
+                        <li><a href="#" class="white text-decoration-none"><RouterLink to="/">Home</RouterLink></a></li>
+                        <li><a href="#" class="white text-decoration-none"><RouterLink to="/about">About Us</RouterLink></a></li>
+                        <li><a href="#" class="white text-decoration-none"><RouterLink to="/faq">Fast FAQ</RouterLink></a></li>
                         <li><a href="#" class="white text-decoration-none">Contact</a></li>
                     </ul>
                 </div>
@@ -29,6 +29,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const currentYear = ref(new Date().getFullYear());
 </script>
