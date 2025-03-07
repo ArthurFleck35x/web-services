@@ -19,7 +19,7 @@
           <ul>
             <li @click="closeMenu"><RouterLink to="/" >Home</RouterLink></li>
             <li @click="closeMenu"><RouterLink to="/about">About</RouterLink></li>
-            <li @click="closeMenu">Logout</li>
+            <li @click="closeMenu"><RouterLink to="/market">Market</RouterLink></li>
           </ul>
         </div>
       </div>
