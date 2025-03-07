@@ -17,9 +17,9 @@
         <!-- Dropdown -->
         <div v-show="menuOpen" class="dropdown">
           <ul>
-            <li @click="closeMenu"><RouterLink to="/" >Home</RouterLink></li>
-            <li @click="closeMenu"><RouterLink to="/about">About</RouterLink></li>
-            <li @click="closeMenu"><RouterLink to="/market">Market</RouterLink></li>
+            <RouterLink class="router" to="/" ><li @click="closeMenu" class="first">Home</li></RouterLink>
+            <RouterLink class="router" to="/about"><li @click="closeMenu">About</li></RouterLink>
+            <RouterLink class="router" to="/market"><li @click="closeMenu" class="last">Market</li></RouterLink>
           </ul>
         </div>
       </div>
@@ -46,6 +46,11 @@
 </script>
 
 <style scoped>
+.router{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
 /* Navbar */
 .navbar {
     display: flex;
@@ -82,7 +87,6 @@
     display: block; /* Immer sichtbar */
 }
 
-/* Dropdown-Menü */
 .dropdown {
     position: absolute;
     right: 1rem;
@@ -91,17 +95,39 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 150px;
+    padding: 0;
+    margin: 0;
 }
 
-/* Dropdown-Text schwarz machen */
+.dropdown ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Dropdown-Elemente */
 .dropdown li {
     color: black;
     padding: 10px;
     cursor: pointer;
     transition: background 0.2s;
-    list-style: none;
+    display: block; /* Stellt sicher, dass die Elemente die volle Breite nutzen */
+    text-align: center; /* Zentriert den Text */
 }
 
+/* Erstes Element mit abgerundeten oberen Ecken */
+.dropdown li.first {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Letztes Element mit abgerundeten unteren Ecken */
+.dropdown li.last {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Hover-Effekt */
 .dropdown li:hover {
     background: #f1f1f1;
 }
