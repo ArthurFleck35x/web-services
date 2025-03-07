@@ -13,10 +13,10 @@
                 <div class="col-md-4">
                     <h5 class="fw-bold">Navigation</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="white text-decoration-none"><RouterLink to="/">Home</RouterLink></a></li>
-                        <li><a href="#" class="white text-decoration-none"><RouterLink to="/about">About Us</RouterLink></a></li>
-                        <li><a href="#" class="white text-decoration-none"><RouterLink to="/faq">Fast FAQ</RouterLink></a></li>
-                        <li><a href="#" class="white text-decoration-none">Contact</a></li>
+                        <li><RouterLink to="/">Home</RouterLink></li>
+                        <li><RouterLink to="/about">About Us</RouterLink></li>
+                        <li><RouterLink to="/faq">Fast FAQ</RouterLink></li>
+                        <li>Contact</li>
                     </ul>
                 </div>
                 <!--Copyright-->
