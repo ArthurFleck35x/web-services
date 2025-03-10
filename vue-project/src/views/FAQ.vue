@@ -13,21 +13,46 @@
         </div>
 
         <main>
-            <div>
+            <div class="bg-dark2" >
                 <div>
                     <h3>General</h3>
                     <div>
                     <h5>
-                        Question
+                        What is UniPlace?
                     </h5>
                     <p>
-                        Answer
+                        Uniplace is a marketplace where users can buy and sell both digital and real-world assets easily and securely.
                     </p>
                     </div>
                     <!--für die anderen anpassen-->
                     <h3>Account</h3>
+                    <div>
+                    <h5>
+                        How do I create an account?
+                    </h5>
+                    <p>
+                        Simply sign up with your email, verify your identity, and start trading.
+                    </p>
+                    </div>
                     <h3>Marketplace</h3>
+                    <div>
+                    <h5>
+                        What can I buy and sell?
+                    </h5>
+                    <p>
+                        You can trade a wide range of items, from in-game assets and NFTs to physical goods.
+
+                    </p>
+                    </div>
                     <h3>Support</h3>
+                    <div>
+                    <h5>
+                        How do I contact customer support?
+                    </h5>
+                    <p>
+                        You can reach us through email.
+                    </p>
+                    </div>
                 </div>
             </div>
         </main>

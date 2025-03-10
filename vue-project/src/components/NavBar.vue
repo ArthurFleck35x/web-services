@@ -2,7 +2,7 @@
     <nav class="navbar bg-dark">
       <!-- Logo -->
       <div class="logo">
-        <img src="@/assets/logo.svg" alt="Logo" />
+        <img src="@/assets/logo.png" alt="Logo" />
       </div>
   
       <!-- Titel -->
