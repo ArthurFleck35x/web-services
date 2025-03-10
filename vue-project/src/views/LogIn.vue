@@ -1,11 +1,11 @@
 <template>
     <div class="bg-dark2">
-        <div>
+        <div class="right element">
             <h1>Log In</h1>
-            <p>Log in to your account to access your assets</p>
+            <p>Log in to your account to access your assets </p>
         </div>
-        <form >
-            <div>
+        <form>
+            <div class="right elements">
                 <label for="email">Email Adress</label>
                 <div>
                     <input type="text" id="email" name="email" placeholder="youremail@example.com">
@@ -16,14 +16,18 @@
                 </div>
             </div>
 
-            <div>
+            <div class="right elements">
             <label for="userId">User ID</label>
             <div>
                 <input type="text" id="userId" name="UserId" placeholder="UniPlaceUser">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>
             </div>
             </div>
 
-            <div>
+            <div class="right">
                 <div>
                     <label for="password">Password</label>
                     <!--
@@ -37,11 +41,11 @@
                 </div>
             </div>
 
-            <button>
+            <button class="right">
                 <span>Sign In</span>
             </button>
 
-            <div>
+            <div class="right">
                 <div>
                     <div>
                         <div></div>
@@ -72,7 +76,10 @@ section div {
     padding: 1rem;
     text-align: center;
 }
-
+/* Platz zwischen den Elementen */
+.element {
+    margin-bottom: 1rem;
+}
 /* Logo */
 .logo img {
     height: 40px;
@@ -96,6 +103,10 @@ h4 {
 /*Schrift mittig*/
 .fonts {
     text-align: center;
+}
+/*Text nach rechts verschieben*/
+.right {
+    margin-left: 10%;
 }
 /* Zentriert den Text */
 .center {
