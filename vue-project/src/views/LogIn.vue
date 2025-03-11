@@ -5,7 +5,7 @@
             <p>Log in to your account to access your assets </p>
         </div>
         <form>
-            <div class="right element">
+            <div class="right element ">
                 <label for="email">Email Adress</label>
                 <div>
                     <input type="text" id="email" name="email" placeholder="youremail@example.com">
@@ -80,6 +80,7 @@ section div {
 .element {
     margin-bottom: 1rem;
 }
+
 /* Logo */
 .logo img {
     height: 40px;
