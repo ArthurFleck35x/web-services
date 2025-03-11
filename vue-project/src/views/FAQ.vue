@@ -15,7 +15,7 @@
         <main>
             <div class="bg-dark2" >
                 <div>
-                    <h3>General</h3>
+                    <h3 class="element">General</h3>
                     <div>
                     <h5>
                         What is UniPlace?
@@ -25,7 +25,7 @@
                     </p>
                     </div>
                     <!--für die anderen anpassen-->
-                    <h3>Account</h3>
+                    <h3 class="element">Account</h3>
                     <div>
                     <h5>
                         How do I create an account?
@@ -34,7 +34,7 @@
                         Simply sign up with your email, verify your identity, and start trading.
                     </p>
                     </div>
-                    <h3>Marketplace</h3>
+                    <h3 class="element">Marketplace</h3>
                     <div>
                     <h5>
                         What can I buy and sell?
@@ -44,7 +44,7 @@
 
                     </p>
                     </div>
-                    <h3>Support</h3>
+                    <h3 class="element">Support</h3>
                     <div>
                     <h5>
                         How do I contact customer support?
@@ -79,7 +79,10 @@ section div {
     height: 40px;
     width: 40px;
 }
-
+/* Platz zwischen den Elementen */
+.element {
+    margin-bottom: 1rem;
+}
 /* Titel */
 .title {
     font-size: 2rem; /* Entspricht "text-2xl" in Tailwind */

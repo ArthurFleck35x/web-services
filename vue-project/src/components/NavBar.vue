@@ -20,6 +20,7 @@
             <RouterLink class="router" to="/" ><li @click="closeMenu" class="first">Home</li></RouterLink>
             <RouterLink class="router" to="/about"><li @click="closeMenu">About</li></RouterLink>
             <RouterLink class="router" to="/market"><li @click="closeMenu" class="last">Market</li></RouterLink>
+            <RouterLink class="router" to="/currency"><li @click="closeMenu" class="last">Currency</li></RouterLink>
           </ul>
         </div>
       </div>
