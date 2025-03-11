@@ -5,7 +5,7 @@
             <p>Log in to your account to access your assets </p>
         </div>
         <form>
-            <div class="right elements">
+            <div class="right element">
                 <label for="email">Email Adress</label>
                 <div>
                     <input type="text" id="email" name="email" placeholder="youremail@example.com">
@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <div class="right elements">
+            <div class="right element">
             <label for="userId">User ID</label>
             <div>
                 <input type="text" id="userId" name="UserId" placeholder="UniPlaceUser">
@@ -27,7 +27,7 @@
             </div>
             </div>
 
-            <div class="right">
+            <div class="right element">
                 <div>
                     <label for="password">Password</label>
                     <!--
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <button class="right">
+            <button class="right element">
                 <span>Sign In</span>
             </button>
 
@@ -50,8 +50,8 @@
                     <div>
                         <div></div>
                     </div>
-                    <div>
-                        <span>Or continue with</span>
+                    <div class="element">
+                        <span >Or continue with</span>
                     </div>
                 </div>
                 <div>
