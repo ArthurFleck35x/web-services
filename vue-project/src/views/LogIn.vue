@@ -106,6 +106,19 @@
     </form>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const goToSignUp = () => {
+    router.push("/signup"); // Navigiert zur SignUp-Seite
+};
+
+</script>
+
+
 <style scoped>
 /* Navbar */
 .navbar {
@@ -241,18 +254,3 @@ h4 {
   padding: 1rem;
 }
 </style>
-<script>
-import { useRouter } from "vue-router";
-
-export default {
-  setup() {
-    const router = useRouter();
-
-    const goToSignUp = () => {
-      router.push("/signup"); // Navigiert zur SignUp-Seite
-    };
-
-    return { goToSignUp };
-  },
-};
-</script>
