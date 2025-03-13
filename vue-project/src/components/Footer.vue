@@ -51,18 +51,18 @@ const currentYear = ref(new Date().getFullYear());
     height: 30px;
     width: 30px;
 }
-/* weiße Schrift */
+/* white Font */
 .white {
     color: white;
 }
-/* Titel */
+/* title */
 .title {
-    font-size: 2rem; /* Entspricht "text-2xl" in Tailwind */
+    font-size: 2rem; /* Matches "text-2xl" in Tailwind */
     font-weight: bold;
     text-align: center;
-    background: linear-gradient(to right, #22d3ee, #9333ea); /* Farbverlauf von Cyan nach Lila */
-    -webkit-background-clip: text; /* Hintergrundclip für den Text */
-    color: transparent; /* Text transparent machen, damit der Hintergrund sichtbar wird */
+    background: linear-gradient(to right, #22d3ee, #9333ea); /* Gradient from Blue to Lila */
+    -webkit-background-clip: text; /* Background-clip für den Text */
+    color: transparent; /* Use a transparent text effect to show the background behind it */
 }
 /*a {
     transition: color 0.3s;
