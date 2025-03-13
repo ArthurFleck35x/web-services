@@ -3,6 +3,7 @@ import AboutUs from '@/views/AboutUs.vue'
 import FAQ from '@/views/FAQ.vue'
 import MarketView from '@/views/MarketView.vue'
 import LogIn from '@/views/LogIn.vue'
+import Currency from '@/views/Currency.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutUs,
+    },
+    {
+      path: '/currency',
+      name: 'currency',
+      component: () => import('../views/Currency.vue'),
     },
     {
       path: '/market',

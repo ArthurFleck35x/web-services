@@ -1,7 +1,25 @@
 <template>
     <div>
         <div class="bg-special">
-            <div><p>Hallo ihr lieben</p></div>
+            <div>
+                <p>Hallo ihr lieben</p>
+                <!-- Dropdown -->
+                <div>
+                    <label for="cars">Select preferred currency </label>
+                    <select name="cars" id="cars">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                    </select>
+                <ul>
+                    <RouterLink class="router" to="/" ><li @click="" class="first">Home</li></RouterLink>
+                    <RouterLink class="router" to="/about"><li @click="">About</li></RouterLink>
+                    <RouterLink class="router" to="/market"><li @click="">Market</li></RouterLink>
+                    <RouterLink class="router" to="/currency"><li @click="" class="last">Currency</li></RouterLink>
+                </ul>
+                </div>
+            </div>
         </div>
     </div>
 </template>

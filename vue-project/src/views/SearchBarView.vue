@@ -28,7 +28,7 @@
 <style scoped>
 /* 🔹 Der Hintergrund soll den kompletten Bildschirm füllen */
 .background {
-    background-image: url('@/assets/tisch.jpg');
+    background-image: url('@/assets/markt.png');
     width: 100%;
     height: 100svh;
     background-size: cover;

@@ -4,8 +4,10 @@ import ArticleView from './ArticleView.vue';
 </script>
 
 <template>
-    <SearchBarView></SearchBarView>
-    <ArticleView></ArticleView>
+    <div class="bg-dark2">
+        <SearchBarView></SearchBarView>
+        <ArticleView></ArticleView>
+    </div>
 </template>
 
 <style scoped>
