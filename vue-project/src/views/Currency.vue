@@ -1,23 +1,23 @@
 <template>
     <div>
         <div class="bg-special">
-            <div>
-                <p>Hallo ihr lieben</p>
+            <div class="elem">
+                <h2>Currency</h2>
                 <!-- Dropdown -->
                 <div>
-                    <label for="cars">Select preferred currency </label>
-                    <select name="cars" id="cars">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
+                    <label for="currency">Select preferred currency </label>
+                    <select name="currency" id="currency">
+                    <option value="eur">EUR</option>
+                    <option value="usd">USD</option>
+                    <option value="gbp">GBP</option>
+                    <option value="jpy">JPY</option>
+                    <option value="krw">KRW</option>
+                    <option value="cny">CNY</option>
+                    <option value="mxn">MXN</option>
                     </select>
-                <ul>
-                    <RouterLink class="router" to="/" ><li @click="" class="first">Home</li></RouterLink>
-                    <RouterLink class="router" to="/about"><li @click="">About</li></RouterLink>
-                    <RouterLink class="router" to="/market"><li @click="">Market</li></RouterLink>
-                    <RouterLink class="router" to="/currency"><li @click="" class="last">Currency</li></RouterLink>
-                </ul>
+                    <div>
+                        <img alt="Flag">
+                    </div>
                 </div>
             </div>
         </div>
