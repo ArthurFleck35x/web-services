@@ -4,7 +4,7 @@
       <h1>Log In</h1>
       <p>Log in to your account to access your assets</p>
     </div>
-    <form>
+    <div>
       <div class="right element">
         <label for="email">Email Adress</label>
         <div>
@@ -103,7 +103,7 @@
           <button @click="goToSignUp">Create an account</button>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
