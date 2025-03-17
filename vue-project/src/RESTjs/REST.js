@@ -117,7 +117,8 @@ export async function fetchFlagURL(country) {
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
     const data = await response.json(); // JSON-Daten extrahieren
-
+        flagURL = data.flagURL;
+        return flagURL;
   } catch (error) {
     console.error('Fehler:', error);
     return []; // Rückgabe einer leeren Liste im Fehlerfall

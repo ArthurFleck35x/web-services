@@ -2,7 +2,6 @@
 import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/Footer.vue";
 import { RouterLink, RouterView } from 'vue-router'
-import SignUp from "./views/SignUp.vue";
 </script>
 
 <template>

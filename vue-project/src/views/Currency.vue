@@ -22,6 +22,21 @@
             </div>
         </div>
     </div>
+    <div>
+        
+        <div class=" bg-special currency-container">
+            <h2>Currency</h2>
+            <!-- Dropdown -->
+            <label for="selectedCurrency">Select preferred currency </label>
+            <select v-model="selectedCurrency" @change="updateCurrencyRate">
+                <option v-for="currency in currencies" :key="currency" :value="currency">
+                    {{ currency }}
+                </option>
+            </select>
+            <p>Wechselkurs: {{ currencyRate }}</p>
+            <img v-if="flagURL" :src="flagURL" alt="Flag" class="flag-image" />
+        </div>
+    </div>
 </template>
 <style scoped>
 /* Navbar */
@@ -76,7 +91,16 @@ h4 {
     cursor: pointer;
     display: block; /* Immer sichtbar */
 }
+.currency-container {
+    text-align: center;
+    padding: 20px;
+}
 
+.flag-image {
+    width: 100px;
+    height: auto;
+    margin-top: 10px;
+}
 /* Dropdown-Menü */
 .dropdown {
     position: absolute;
@@ -124,3 +148,36 @@ h4 {
     padding: 1rem;
 }
 </style>
+<script>
+import { fetchCurrencyRate, fetchFlagURL } from "@/RESTjs/REST.js";
+
+export default {
+    data() {
+        return {
+        selectedCurrency: "USD",
+        currencyRate: null,
+        flagURL: "",
+        currencies: ["USD", "EUR", "GBP", "JPY", "CHF"]
+        };
+    },
+    methods: {
+        async updateCurrencyRate() {
+            this.currencyRate = await fetchCurrencyRate(this.selectedCurrency);
+            this.flagURL = await fetchFlagURL(this.getCountryByCurrency(this.selectedCurrency));
+        },
+        getCountryByCurrency(currency) {
+            const currencyMap = {
+            "USD": "United States",
+            "EUR": "Germany",
+            "GBP": "United Kingdom",
+            "JPY": "Japan",
+            "CHF": "Switzerland"
+            };
+        return currencyMap[currency] || "Unknown";
+        }
+    },
+    mounted() {
+        this.updateCurrencyRate();
+    }
+};
+</script>
