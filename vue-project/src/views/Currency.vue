@@ -171,7 +171,9 @@ export default {
             "EUR": "Germany",
             "GBP": "United Kingdom",
             "JPY": "Japan",
-            "CHF": "Switzerland"
+            "CHF": "Switzerland",
+            "CNY": "China",
+            "MXN": "Mexico"
             };
         return currencyMap[currency] || "Unknown";
         }

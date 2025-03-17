@@ -65,28 +65,18 @@
                     <a href="#">Forgot your password? </a> -->
         </div>
         <div>
+          
           <input
             type="password"
             id="password"
             name="password"
             placeholder="UniPlace123"
           />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-lock"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"
-            />
-          </svg>
+          
         </div>
       </div>
 
-      <button class="right element">
+      <button class="right element button">
         <span>Sign In</span>
       </button>
 
@@ -100,7 +90,7 @@
           </div>
         </div>
         <div>
-          <button @click="goToSignUp">Create an account</button>
+          <button class="button" @click="goToSignUp">Create an account</button>
         </div>
       </div>
     </div>
@@ -130,6 +120,7 @@ const goToSignUp = () => {
   color: white;
   position: relative;
 }
+
 section div {
   padding: 1rem;
   text-align: center;
@@ -166,6 +157,28 @@ h4 {
 /*Schrift mittig*/
 .fonts {
   text-align: center;
+}
+.button {
+  background-color:#4a5568;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  cursor: pointer;
+  display: inline-block;
+  padding: 15px 25px;
+  outline: none;
+  border: none;
+}
+
+.button:hover {opacity: 10}
+.button:active {
+  background-color: #2d3748;
+  transform: translateY(4px);
 }
 /*Text nach rechts verschieben*/
 .right {
