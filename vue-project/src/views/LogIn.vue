@@ -95,6 +95,12 @@
       </div>
     </div>
   </div>
+  <div class="bg-special">
+    <div class="center">
+        <h2>Welcome to UniPlace – Your Marketplace for Everything! </h2>
+        <p>Find what you're looking for – or sell what you no longer need. <br> We connect buyers and sellers for a simple and secure trading experience. <br> Log in now to explore great deals or list your own products. <br> Your next deal is just a click away! [Log in now] or [Sign up] to get started!</p>
+      </div>
+    </div>
 </template>
 
 <script setup>
