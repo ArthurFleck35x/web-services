@@ -1,11 +1,11 @@
 <template>
-    <div class="bg-dark2">
-        <div>
+    <div class="bg-special">
+        <div class="right element"> 
             <h1>Sign Up</h1>
             <p>Create your account to access your assets</p>
         </div>
         <div >
-            <div>
+            <div class="right element">
                 <label for="email">Email Adress</label>
                 <div>
                     <input type="text" id="email" name="email" placeholder="youremail@example.com">
@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="right element">
                 <label for="username">Username</label>
                 <div>
                     <input type="text" id="username" name="username" placeholder="UniPlaceUser">
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="right element">
                 <div>
                     <label for="password"></label>
                     <a href="#">Forgot your password? </a>
@@ -49,16 +49,16 @@
                 </div>
             </div>
 
-            <button>
+            <button class="right element">
                 <span>Sign Up</span>
             </button>
 
-            <div>
+            <div class="right">
                 <div>
                     <div>
                         <div></div>
                     </div>
-                    <div>
+                    <div class="element">
                         <span>Or continue with</span>
                     </div>
                 </div>
@@ -156,11 +156,17 @@ h4 {
     transition: background 0.2s;
     list-style: none;
 }
-
+/* Platz zwischen den Elementen */
+.element {
+    margin-bottom: 1rem;
+}
 .dropdown li:hover {
     background: #f1f1f1;
 }
-
+/*Text nach rechts verschieben*/
+.right {
+    margin-left: 10%;
+}
 /* Für den Dark Mode Hintergrund */
 .bg-dark {
     background: linear-gradient(to bottom right, #1a202c, #2d3748, #4a5568); /* Dark Gray to Slate */

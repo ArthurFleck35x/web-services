@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark2">
+  <div class="bg-special">
     <div class="right element">
       <h1>Log In</h1>
       <p>Log in to your account to access your assets</p>
