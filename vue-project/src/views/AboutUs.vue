@@ -5,8 +5,8 @@
             <!-- About Us Banner -->
             <div class="center">
                 <div >
-                    <h1 class="title">About UniPlace</h1>
-                    <p>
+                    <h1 class="title top5">About UniPlace</h1>
+                    <p class="bottom5">
                         Pioneering of asset trading across the multiverse
                     </p>
                 </div>
@@ -40,7 +40,7 @@
                 </svg>
                 <h2>Revolutionizing Digital Trading</h2>
                 <p>Digital trading is evolving rapidly – and we are at the forefront. <br> With innovative technologies and a user-friendly platform, we are creating new opportunities to trade digital assets securely, quickly, and efficiently.<br> Our vision: a limitless, transparent, and accessible trading environment for everyone.</p>
-                <p>The future of digital trading starts now.</p>
+                <p class="bottom5">The future of digital trading starts now.</p>
             </div>
         </section>
     </main>
@@ -89,6 +89,12 @@ h4 {
 /* weiße Schrift */
 .white {
     color: white;
+}
+.top5{
+    margin-top: 5rem
+}
+.bottom5{
+    margin-bottom: 5rem
 }
 /* Burger-Menü Button */
 .menu-button {

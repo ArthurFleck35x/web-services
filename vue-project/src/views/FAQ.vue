@@ -5,8 +5,8 @@
                 <!-- About Us Banner img -->
                 <div>
                     <div>
-                        <h1 class="title center" >Fast FAQ</h1>
-                        <p class="center"> Get your answers here!</p>
+                        <h1 class="title center top5" >Fast FAQ</h1>
+                        <p class="center bottom5"> Get your answers here!</p>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,12 @@ section div {
     padding: 1rem;
     text-align: center;
 }
-
+.bottom5{
+    margin-bottom: 5rem
+}
+.top5{
+    margin-top: 5rem
+}
 /* Logo */
 .logo img {
     height: 40px;
