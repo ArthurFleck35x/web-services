@@ -74,7 +74,7 @@ app.post("/get-flag", (req, res) => {
   if (!currency || !currencyToIso[currency]) {
     return res
       .status(400)
-      .json({ success: false, message: "Ungültige Währung!" });
+      .json({ success: false, message: "Ungültige Währung! " });
   }
 
   // ISO-Code für die Währung finden
