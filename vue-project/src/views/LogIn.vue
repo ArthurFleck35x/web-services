@@ -86,8 +86,8 @@
         </div>
       </div>
 
-      <button class="right element button" @click="signIn">
-        <span>Sign In</span>
+      <button class="right element button" @click="Login">
+        <span>Login</span>
       </button>
 
       <div class="right">
@@ -140,9 +140,8 @@ const isPopupVisible = ref(false);
 
 const errormessage = ref('');
 
-const signIn = () => {
-  checkValues();
-  if(!emailEmpty.value && !userNameEmpty.value && !passwordEmpty.value){
+const Login = () => {
+  if(!checkValues()){
     hashedPassword.value = CryptoJS.SHA256(username.value+password.value).toString(CryptoJS.enc.Hex);
     sendLoginData()
   }else{
@@ -152,21 +151,26 @@ const signIn = () => {
 }
 
 function checkValues(){
+  var isEmpty = false;
   if(email.value == ''){
     emailEmpty.value = true;
+    isEmpty = true;
   }else{
     emailEmpty.value = false;
   }
   if(username.value == ''){
     userNameEmpty.value = true;
+    isEmpty = true;
   }else{
     userNameEmpty.value = false;
   }
   if(password.value == ''){
     passwordEmpty.value = true;
+    isEmpty = true;
   }else{
     passwordEmpty.value = false;
   }
+  return isEmpty;
 }
 
 function sendLoginData(){
