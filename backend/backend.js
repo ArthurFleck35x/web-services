@@ -30,6 +30,7 @@ app.get('/myarticles', (req, res) => {
             res.status(500).json({ error: 'Fehler beim Abrufen der Artikel' });
             return;
         }
+        res.status("Penis")
         res.json(rows);
     });
 });
