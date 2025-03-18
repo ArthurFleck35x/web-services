@@ -36,27 +36,26 @@ app.get('/api/myarticles', (req, res) => {
 });
 
 // Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
-app.get('/api/searcharticles', (req, res) => {
-    const { searchstring } = req.query;  // seachstring aus der URL entnehmen
+app.get('/searcharticle', (req, res) => {
+    const { searchstring } = req.query; // Suchbegriff aus der Anfrage
 
     if (!searchstring) {
-        return res.status(400).json({ error: 'Searchstring muss angegeben werden' });
+        return res.status(400).json({ error: 'Suchstring muss angegeben werden' });
     }
-    
-    const query = "SELECT * FROM artikel WHERE title LIKE ?";
-    
-    db.get(query, ["%"+searchstring+"%"], (err, row) => {
+
+    const query = "SELECT * FROM artikel WHERE name LIKE ? OR beschreibung LIKE ?";
+
+    db.all(query, [`%${searchstring}%`, `%${searchstring}%`], (err, rows) => {
         if (err) {
-            res.status(500).json({ error: 'Fehler beim Abrufen des Artikels' });
-            return;
+            return res.status(500).json({ error: 'Fehler beim Abrufen der Artikel' });
         }
-        if (!row) {
-            return res.status(404).json({ error: 'Artikel nicht gefunden' });
+        if (!rows || rows.length === 0) {
+            return res.status(404).json({ error: 'Keine Artikel gefunden' });
         }
-        res.status(200)
-        res.json(row);
+        res.status(200).json(rows);
     });
 });
+
 
 // Server starten
 const PORT = process.env.PORT || 3000;
