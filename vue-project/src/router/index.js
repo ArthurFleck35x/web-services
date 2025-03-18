@@ -4,6 +4,7 @@ import FAQ from '@/views/FAQ.vue'
 import MarketView from '@/views/MarketView.vue'
 import LogIn from '@/views/LogIn.vue'
 import Currency from '@/views/Currency.vue'
+import { isLoggedIn } from '@/RESTjs/REST'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +13,7 @@ const router = createRouter({
       path: '/faq',
       name: 'faq',
       component: FAQ,
+      meta: { requiresAuth: true},
     },
     {
       path: '/signup',
@@ -22,16 +24,19 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutUs,
+      meta: { requiresAuth: true},
     },
     {
       path: '/currency',
       name: 'currency',
       component: () => import('../views/Currency.vue'),
+      meta: { requiresAuth: true},
     },
     {
       path: '/market',
       name: 'market',
       component: MarketView,
+      meta: { requiresAuth: true},
     },
     {
       path: '/',
@@ -55,3 +60,11 @@ const router = createRouter({
 })
 
 export default router
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    next('/');
+  } else {
+    next();
+  }
+});

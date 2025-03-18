@@ -100,6 +100,7 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { registerUser } from "@/RESTjs/REST";
 import CryptoJS from "crypto-js";
+import { setLoggedIn } from "@/RESTjs/REST";
 
 const router = useRouter();
 
@@ -159,6 +160,7 @@ function sendSignUpData(){
   //var data = registerUser(email.value,username.value,hashedPassword.value);
   errormessage.value = "Hallo";
   openPopup();
+  setLoggedIn(true);
 }
 
 function openPopup(){

@@ -4,7 +4,17 @@ var userID;
 
 var currencyRate;
 
+var loggedIn = false;
+
 var flagURL;
+
+export function isLoggedIn(){
+  return loggedIn;
+}
+
+export function setLoggedIn(state){
+  loggedIn = state;
+}
 
 export async function fetchArticles() {
     try {
