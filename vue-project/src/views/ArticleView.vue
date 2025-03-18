@@ -1,7 +1,8 @@
 
 <template>
     <div v-if="isPopupVisible" class="popUp">
-        <div>Hallo</div>
+        <div>{{ certainProduct.name }}</div>
+        <div>{{ certainProduct.description }}</div>
         <button @click="closePupUp()">Close</button>
     </div>
     <div class="bg-special">
@@ -16,7 +17,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { getCurrencyRate } from '@/RESTjs/REST';
+import { getCurrencyRate,fetchArticles,fetchSearchArticles } from '@/RESTjs/REST';
 
 var certainProduct;
 
@@ -24,11 +25,7 @@ var currencyRate;
 
 var isPopupVisible = false;
 
-const products = ref([
-  {id: 1, name: "Laptop", price: 1200, quantity: 5 },
-  {id: 2, name: "Handy", price: 800, quantity: 10 },
-  {id: 3, name: "Kopfhörer", price: 150, quantity: 20 }
-]);
+const products = ref([]);
 
 function getDetails(id){
     certainProduct = products.value.find(product => product.id == id);
@@ -41,6 +38,10 @@ function closePupUp(){
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();
+    products.value = fetchArticles();
+    products.value = fetchSearchArticles("a");
+    console.log(products);
+    
 })
 
 </script>
