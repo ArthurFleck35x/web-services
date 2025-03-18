@@ -1,12 +1,12 @@
-const serverURL = "";
+const serverURL = "/api";
 
 var userID;
 
-var currencyRate;
+var currencyRate = 1;
 
 var loggedIn = false;
 
-var flagURL;
+var flagURL = "";
 
 export function isLoggedIn(){
   return loggedIn;
@@ -14,6 +14,10 @@ export function isLoggedIn(){
 
 export function setLoggedIn(state){
   loggedIn = state;
+}
+
+export function getCurrencyRate(){
+  registerUser = currencyRate;
 }
 
 export async function fetchArticles() {
@@ -34,7 +38,9 @@ export async function fetchSearchArticles(searchstring) {
       const response = await fetch(serverURL+"/searcharticles",{
         method: "GET",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(searchstring),
+        body: JSON.stringify({
+          "searchstring": searchstring
+        }),
       }); // Beispiel-API
 
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
@@ -52,7 +58,9 @@ export async function fetchMyArticles() {
       const response = await fetch(serverURL+"/myarticles",{
         method: "GET",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(userID),
+        body: JSON.stringify({
+          "userID": userID
+        }),
       }); // Beispiel-API
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
@@ -115,7 +123,9 @@ export async function fetchCurrencyRate(currency) {
     const response = await fetch(serverURL+"/currency",{
       method: "GET",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(currency),
+      body: JSON.stringify({
+        "currency": currency
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
@@ -132,7 +142,9 @@ export async function fetchFlagURL(country) {
     const response = await fetch(serverURL+"/flag",{
       method: "GET",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(country),
+      body: JSON.stringify({
+        "country": country
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 

@@ -7,7 +7,7 @@
     <div class="bg-special">
         <div class="product-item" v-for="product in products">
             <p class="product-field"><strong>Produkt:</strong> {{ product.name }}</p>
-            <p class="product-field"><strong>Preis:</strong> {{ product.price }}€</p>
+            <p class="product-field"><strong>Preis:</strong> {{ product.price * currencyRate}}€</p>
             <p class="product-field"><strong>Anzahl:</strong> {{ product.quantity }}</p>
             <button class="detailButton" @click="getDetails(product.id)">Details</button>
         </div>
@@ -15,9 +15,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { getCurrencyRate } from '@/RESTjs/REST';
 
 var certainProduct;
+
+var currencyRate;
 
 var isPopupVisible = false;
 
@@ -35,6 +38,10 @@ function getDetails(id){
 function closePupUp(){
     isPopupVisible = false;
 }
+
+onMounted(()=>{
+    currencyRate = getCurrencyRate();
+})
 
 </script>
 
