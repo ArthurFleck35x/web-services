@@ -1,12 +1,12 @@
-const serverURL = "";
+const serverURL = "/api";
 
 var userID;
 
-var currencyRate;
+var currencyRate = 1;
 
 var loggedIn = false;
 
-var flagURL;
+var flagURL = "";
 
 export function isLoggedIn(){
   return loggedIn;
@@ -14,6 +14,10 @@ export function isLoggedIn(){
 
 export function setLoggedIn(state){
   loggedIn = state;
+}
+
+export function getCurrencyRate(){
+  registerUser = currencyRate;
 }
 
 export async function fetchArticles() {
@@ -31,12 +35,11 @@ export async function fetchArticles() {
 
 export async function fetchSearchArticles(searchstring) {
     try {
-      const response = await fetch(serverURL+"/searcharticles",{
+      const response = await fetch(serverURL+"/searcharticles?searchstring=" + encodeURIComponent(searchstring),{
         method: "GET",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(searchstring),
       }); // Beispiel-API
-
+      console.log(response.status)
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren
@@ -49,10 +52,9 @@ export async function fetchSearchArticles(searchstring) {
 
 export async function fetchMyArticles() {
     try {
-      const response = await fetch(serverURL+"/myarticles",{
+      const response = await fetch(serverURL+"/myarticles?userID="+encodeURIComponent(userID),{
         method: "GET",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(userID),
       }); // Beispiel-API
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
@@ -112,10 +114,9 @@ export async function registerUser(email,username,password) {
 
 export async function fetchCurrencyRate(currency) {
   try {
-    const response = await fetch(serverURL+"/currency",{
+    const response = await fetch(serverURL+"/currency?currency="+encodeURIComponent(currency),{
       method: "GET",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(currency),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
@@ -129,10 +130,9 @@ export async function fetchCurrencyRate(currency) {
 
 export async function fetchFlagURL(country) {
   try {
-    const response = await fetch(serverURL+"/flag",{
+    const response = await fetch(serverURL+"/flag?country="+encodeURIComponent(country),{
       method: "GET",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(country),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 

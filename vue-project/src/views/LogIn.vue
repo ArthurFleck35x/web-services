@@ -5,7 +5,7 @@
   </div>
   <div class="bg-special">
     <div class="right element">
-      <h1>Log In</h1>
+      <h1 class="top5">Log In</h1>
       <p>Log in to your account to access your assets</p>
     </div>
     <div>
@@ -25,7 +25,7 @@
             width="16"
             height="16"
             fill="currentColor"
-            class="bi bi-envelope-at"
+            class="bi bi-envelope-at svg"
             viewBox="0 0 16 16"
           >
             <path
@@ -54,7 +54,7 @@
             width="16"
             height="16"
             fill="currentColor"
-            class="bi bi-person-circle"
+            class="bi bi-person-circle svg"
             viewBox="0 0 16 16"
           >
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -82,7 +82,18 @@
             placeholder="UniPlace123"
             :class="{'error': passwordEmpty}"
           />
-          
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-lock svg"
+              viewBox="0 0 16 16"
+              >
+              <path
+              d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"
+              />
+          </svg>
         </div>
       </div>
 
@@ -100,15 +111,21 @@
           </div>
         </div>
         <div>
-          <button class="button" @click="goToSignUp">Create an account</button>
+          <button class="button bottom5" @click="goToSignUp">Create an account</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="bg-special">
+  <div class="bg-special element">
     <div class="center">
-        <h2>Welcome to UniPlace – Your Marketplace for Everything! </h2>
-        <p>Find what you're looking for – or sell what you no longer need. <br> We connect buyers and sellers for a simple and secure trading experience. <br> Log in now to explore great deals or list your own products. <br> Your next deal is just a click away! [Log in now] or [Sign up] to get started!</p>
+        <h2 class="bottom2">Welcome to UniPlace – Your Marketplace for Everything! <br></h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket element" viewBox="0 0 16 16">
+            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9zM1 7v1h14V7zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5"/>
+        </svg>
+        <p class="element">Find what you're looking for – or sell what you no longer need. <br> We connect buyers and sellers for a simple and secure trading experience. <br> Log in now to explore great deals or list your own products. <br> Your next deal is just a click away! <br> Lets get started!</p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-sunglasses-fill bottom5" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M2.31 5.243A1 1 0 0 1 3.28 4H6a1 1 0 0 1 1 1v.116A4.2 4.2 0 0 1 8 5c.35 0 .69.04 1 .116V5a1 1 0 0 1 1-1h2.72a1 1 0 0 1 .97 1.243l-.311 1.242A2 2 0 0 1 11.439 8H11a2 2 0 0 1-1.994-1.839A3 3 0 0 0 8 6c-.393 0-.74.064-1.006.161A2 2 0 0 1 5 8h-.438a2 2 0 0 1-1.94-1.515zM4.969 9.75A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .866-.5z"/>
+        </svg>
       </div>
     </div>
 </template>
@@ -117,7 +134,7 @@
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import CryptoJS from "crypto-js";
-import { checkLoginData } from "@/RESTjs/REST";
+import { checkLoginData, setLoggedIn } from "@/RESTjs/REST";
 
 const router = useRouter();
 
@@ -177,6 +194,7 @@ function sendLoginData(){
   //var data = checkLoginData(email.value,username.value,hashedPassword.value);
   errormessage.value = "Hallo";
   openPopup();
+  setLoggedIn(true);
 }
 
 function openPopup(){
@@ -201,7 +219,9 @@ function openPopup(){
   color: white;
   position: relative;
 }
-
+.top5{
+    margin-top: 5rem
+}
 section div {
   padding: 1rem;
   text-align: center;
@@ -293,7 +313,9 @@ h4 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 150px;
 }
-
+.svg{
+  margin-left: 2px;
+}
 /* Dropdown-Text schwarz machen */
 .dropdown li {
   color: black;
@@ -324,6 +346,12 @@ h4 {
     #2d3748
   ); /* Dark Gray to Slate */
   color: white;
+}
+.bottom2 {
+  margin-bottom: 2rem;
+}
+.bottom5 {
+  margin-bottom: 5rem;
 }
 
 /* Für den Light Mode Hintergrund */
