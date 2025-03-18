@@ -117,7 +117,7 @@
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import CryptoJS from "crypto-js";
-import { checkLoginData } from "@/RESTjs/REST";
+import { checkLoginData, setLoggedIn } from "@/RESTjs/REST";
 
 const router = useRouter();
 
@@ -177,6 +177,7 @@ function sendLoginData(){
   //var data = checkLoginData(email.value,username.value,hashedPassword.value);
   errormessage.value = "Hallo";
   openPopup();
+  setLoggedIn(true);
 }
 
 function openPopup(){
@@ -293,7 +294,9 @@ h4 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 150px;
 }
-
+.svg{
+  margin-left: 2px;
+}
 /* Dropdown-Text schwarz machen */
 .dropdown li {
   color: black;
