@@ -95,7 +95,7 @@ app.post("/currency", async (req, res) => {
     return res.status(500).json({
       success: false,
       message:
-        "❌ Fehler beim Abrufen des Wechselkurses. Keine Daten in der Datei.",
+        "Fehler beim Abrufen des Wechselkurses. Keine Daten in der Datei.",
     });
   }
 

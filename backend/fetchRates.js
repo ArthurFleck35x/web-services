@@ -8,7 +8,7 @@ const FILE_PATH = path.join(__dirname, "exchange_rates.json");
 
 // Wechselkurse abrufen und speichern
 async function fetchExchangeRates() {
-  console.log("🔄 Starte Abruf der Wechselkurse...");
+  console.log("Starte Abruf der Wechselkurse...");
   const exchangeRates = {
     eur: {}, // Wir speichern nur den Wechselkurs von Euro zu den anderen Währungen
   };
