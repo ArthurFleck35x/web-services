@@ -1,4 +1,8 @@
 <template>
+  <div class="popup bg-dark" v-if="isPopupVisible">
+    <div class="errorMessage">Error</div>
+    <div>{{ errormessage }}</div>
+  </div>
   <div class="bg-special">
     <div class="right element">
       <h1>Log In</h1>
@@ -12,7 +16,9 @@
             type="text"
             id="email"
             name="email"
+            v-model="email"
             placeholder="youremail@example.com"
+            :class="{'error': emailEmpty}"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,13 +39,15 @@
       </div>
 
       <div class="right element">
-        <label for="userId">User ID</label>
+        <label for="userName">Username</label>
         <div>
           <input
             type="text"
-            id="userId"
-            name="UserId"
+            id="userName"
+            name="UserName"
+            v-model="username"
             placeholder="UniPlaceUser"
+            :class="{'error': userNameEmpty}"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -70,13 +78,15 @@
             type="password"
             id="password"
             name="password"
+            v-model="password"
             placeholder="UniPlace123"
+            :class="{'error': passwordEmpty}"
           />
           
         </div>
       </div>
 
-      <button class="right element button">
+      <button class="right element button" @click="signIn">
         <span>Sign In</span>
       </button>
 
@@ -105,11 +115,72 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+import CryptoJS from "crypto-js";
+import { checkLoginData } from "@/RESTjs/REST";
 
 const router = useRouter();
 
 const goToSignUp = () => {
     router.push("/signup"); // Navigiert zur SignUp-Seite
+};
+
+const email = ref('');
+const emailEmpty = ref(false);
+
+const username = ref('');
+const userNameEmpty = ref(false);
+
+const password = ref('');
+const passwordEmpty = ref(false)
+
+const hashedPassword = ref('');
+
+const isPopupVisible = ref(false);
+
+const errormessage = ref('');
+
+const signIn = () => {
+  checkValues();
+  if(!emailEmpty.value && !userNameEmpty.value && !passwordEmpty.value){
+    hashedPassword.value = CryptoJS.SHA256(username.value+password.value).toString(CryptoJS.enc.Hex);
+    sendLoginData()
+  }else{
+    errormessage.value = "Please input your data";
+    openPopup();
+  }
+}
+
+function checkValues(){
+  if(email.value == ''){
+    emailEmpty.value = true;
+  }else{
+    emailEmpty.value = false;
+  }
+  if(username.value == ''){
+    userNameEmpty.value = true;
+  }else{
+    userNameEmpty.value = false;
+  }
+  if(password.value == ''){
+    passwordEmpty.value = true;
+  }else{
+    passwordEmpty.value = false;
+  }
+}
+
+function sendLoginData(){
+  //var data = checkLoginData(email.value,username.value,hashedPassword.value);
+  errormessage.value = "Hallo";
+  openPopup();
+}
+
+function openPopup(){
+  isPopupVisible.value = true;
+  
+  setTimeout(() => {
+    isPopupVisible.value = false;
+  }, 2000);
 };
 
 </script>
@@ -271,5 +342,24 @@ h4 {
   color: white;
   width: 100%;
   padding: 1rem;
+}
+
+.error{
+  color: red;
+}
+
+.errorMessage{
+  color: red;
+  text-align: center;
+}
+
+.popup {
+  margin-top: 70px;
+  margin-left: 45%;
+  width: 10%;
+  height: auto;
+  position: absolute;
+  border-radius: 10px;
+  z-index: 400;
 }
 </style>

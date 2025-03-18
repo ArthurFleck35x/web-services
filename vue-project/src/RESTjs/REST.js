@@ -54,18 +54,22 @@ export async function fetchMyArticles() {
     }
 }
 
-export async function checkLoginData() {
+export async function checkLoginData(email,username,password) {
   try {
     const response = await fetch(serverURL+"/login",{
       method: "PUT",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(),
+      body: JSON.stringify({
+        "email": email,
+        "username": username,
+        "password": password
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
     const data = await response.json(); // JSON-Daten extrahieren
     
-
+    return data;
 
   } catch (error) {
     console.error('Fehler:', error);
