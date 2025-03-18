@@ -35,8 +35,8 @@ app.get('/myarticles', (req, res) => {
 });
 
 // Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
-app.get('/searcharticle/:id', (req, res) => {
-    const { id } = req.params;  // ID aus der URL entnehmen
+app.get('/searcharticles', (req, res) => {
+    const { title } = req.json  // ID aus der URL entnehmen
     
     if (!id) {
         return res.status(400).json({ error: 'Artikel-ID muss angegeben werden' });
