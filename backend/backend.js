@@ -16,7 +16,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 app.use(express.json());
 
 // Route zum Abrufen der Artikel eines bestimmten Nutzers
-app.get('/myarticles', (req, res) => {
+app.get('/api/myarticles', (req, res) => {
     const { userId } = req.query;
     
     if (!userId) {
@@ -36,11 +36,11 @@ app.get('/myarticles', (req, res) => {
 });
 
 // Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
-app.get('/searcharticles', (req, res) => {
-    const { title } = req.query  // ID aus der URL entnehmen
-    
-    if (!id) {
-        return res.status(400).json({ error: 'Artikel-ID muss angegeben werden' });
+app.get('/api/searcharticles', (req, res) => {
+    const { title } = req.query  // seachstring aus der URL entnehmen
+   
+    if (!title) {
+        return res.status(400).json({ error: 'Title muss angegeben werden' });
     }
     
     const query = "SELECT * FROM artikel WHERE title LIKE ?";
