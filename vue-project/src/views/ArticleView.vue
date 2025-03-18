@@ -36,12 +36,15 @@ function closePupUp(){
     isPopupVisible = false;
 }
 
+
+
 onMounted(()=>{
     currencyRate = getCurrencyRate();
-    products.value = fetchArticles();
-    products.value = fetchSearchArticles("a");
-    console.log(products);
-    
+    //products.value = fetchArticles();
+    fetchSearchArticles("a")
+    //.then(data=>{
+    //    products.value = data;
+    //});
 })
 
 </script>

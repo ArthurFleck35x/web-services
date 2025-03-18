@@ -16,7 +16,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 app.use(express.json());
 
 // Route zum Abrufen der Artikel eines bestimmten Nutzers
-app.get("/myarticles", (req, res) => {
+app.get("/api/myarticles", (req, res) => {
   const { userId } = req.query;
 
   if (!userId) {
@@ -35,14 +35,14 @@ app.get("/myarticles", (req, res) => {
 });
 
 // Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
-app.get('/searcharticle', (req, res) => {
+app.get('/api/searcharticles', (req, res) => {
     const { searchstring } = req.query; // Suchbegriff aus der Anfrage
-
+    
     if (!searchstring) {
         return res.status(400).json({ error: 'Suchstring muss angegeben werden' });
     }
 
-    const query = "SELECT * FROM artikel WHERE name LIKE ? OR beschreibung LIKE ?";
+    const query = "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
 
     db.all(query, [`%${searchstring}%`, `%${searchstring}%`], (err, rows) => {
         if (err) {
