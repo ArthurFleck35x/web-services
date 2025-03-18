@@ -19,7 +19,7 @@ async function fetchExchangeRates() {
 
       if (!response.ok) {
         throw new Error(
-          `❌ API-Fehler ${response.status}: ${response.statusText}`
+          `API-Fehler ${response.status}: ${response.statusText}`
         );
       }
 
@@ -32,16 +32,16 @@ async function fetchExchangeRates() {
         }
       });
     } catch (error) {
-      console.error(`❌ Fehler für ${base}:`, error.message);
+      console.error(`Fehler für ${base}:`, error.message);
     }
   }
 
   // JSON speichern
   try {
     fs.writeFileSync(FILE_PATH, JSON.stringify(exchangeRates, null, 2));
-    console.log(`✅ Wechselkurse gespeichert in: ${FILE_PATH}`);
+    console.log(`Wechselkurse gespeichert in: ${FILE_PATH}`);
   } catch (error) {
-    console.error("❌ Fehler beim Speichern der JSON-Datei:", error.message);
+    console.error("Fehler beim Speichern der JSON-Datei:", error.message);
   }
 }
 
