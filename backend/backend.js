@@ -37,15 +37,15 @@ app.get('/api/myarticles', (req, res) => {
 
 // Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
 app.get('/api/searcharticles', (req, res) => {
-    const { title } = req.query  // seachstring aus der URL entnehmen
-   
-    if (!title) {
-        return res.status(400).json({ error: 'Title muss angegeben werden' });
+    const { searchstring } = req.query;  // seachstring aus der URL entnehmen
+
+    if (!searchstring) {
+        return res.status(400).json({ error: 'Searchstring muss angegeben werden' });
     }
     
     const query = "SELECT * FROM artikel WHERE title LIKE ?";
     
-    db.get(query, ["%"+title+"%"], (err, row) => {
+    db.get(query, ["%"+searchstring+"%"], (err, row) => {
         if (err) {
             res.status(500).json({ error: 'Fehler beim Abrufen des Artikels' });
             return;
