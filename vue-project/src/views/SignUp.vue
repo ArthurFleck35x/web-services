@@ -88,12 +88,16 @@
                     </div>
                 </div>
                 <div>
-                    <button @click="goToLogIn">Login</button>
+                    <button class="bottom5" @click="goToLogIn">Login</button>
                 </div>
             </div>
         </div>
     </div>
-    
+    <div class="bg-special">
+        <h2>Welcome to UniPlace!</h2>
+        <p>Create an account now to start shopping on our marketplace or sell your own items. <br> If you already have an account, simply click Log In and get started!</p>
+        <h2>Sign up now & start today!</h2>
+    </div>
 </template>
 <script setup>
 import { useRouter } from "vue-router";
@@ -217,6 +221,12 @@ h4 {
 /* Zentriert den Text */
 .center {
     text-align: center;
+}
+.bottom2 {
+    margin-bottom: 2rem;
+}
+.bottom5 {
+    margin-bottom: 5rem;
 }
 /* weiße Schrift */
 .white {
