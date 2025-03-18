@@ -53,6 +53,7 @@ app.get('/searcharticles', (req, res) => {
         if (!row) {
             return res.status(404).json({ error: 'Artikel nicht gefunden' });
         }
+        res.status(200)
         res.json(row);
     });
 });
