@@ -17,7 +17,7 @@ export function setLoggedIn(state){
 }
 
 export function getCurrencyRate(){
-  registerUser = currencyRate;
+  return currencyRate;
 }
 
 export async function fetchArticles() {
@@ -39,7 +39,6 @@ export async function fetchSearchArticles(searchstring) {
         method: "GET",
         headers: {"Content-Type": "application/json"},
       }); // Beispiel-API
-      console.log(response.status)
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren

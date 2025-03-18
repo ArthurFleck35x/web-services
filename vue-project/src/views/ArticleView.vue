@@ -7,9 +7,9 @@
     </div>
     <div class="bg-special">
         <div class="product-item" v-for="product in products">
-            <p class="product-field"><strong>Produkt:</strong> {{ product.name }}</p>
+            <p class="product-field"><strong>Produkt:</strong> {{ product.title }}</p>
             <p class="product-field"><strong>Preis:</strong> {{ product.price * currencyRate}}€</p>
-            <p class="product-field"><strong>Anzahl:</strong> {{ product.quantity }}</p>
+            <p class="product-field"><strong>Anzahl:</strong> {{ product.count }}</p>
             <button class="detailButton" @click="getDetails(product.id)">Details</button>
         </div>
     </div>
@@ -36,12 +36,15 @@ function closePupUp(){
     isPopupVisible = false;
 }
 
+
+
 onMounted(()=>{
     currencyRate = getCurrencyRate();
-    products.value = fetchArticles();
-    products.value = fetchSearchArticles("a");
-    console.log(products);
-    
+    //products.value = fetchArticles();
+    fetchSearchArticles("a").then(data=>{
+        products.value = data;
+        console.log(data);
+    });
 })
 
 </script>
