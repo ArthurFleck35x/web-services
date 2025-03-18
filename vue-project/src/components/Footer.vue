@@ -16,7 +16,6 @@
                         <li><RouterLink to="/" class="text-decoration-none white">Home</RouterLink></li>
                         <li><RouterLink to="/about" class="text-decoration-none white">About Us</RouterLink></li>
                         <li><RouterLink to="/faq" class="text-decoration-none white">Fast FAQ</RouterLink></li>
-                        <li><RouterLink to="/contact" class="text-decoration-none white">Contact</RouterLink></li>
                         <li><RouterLink to="/market" class="text-decoration-none white">Market</RouterLink></li>
                     </ul>
                 </div>
