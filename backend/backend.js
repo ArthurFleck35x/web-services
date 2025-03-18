@@ -51,7 +51,7 @@ app.get('/api/searcharticles', (req, res) => {
         if (!rows || rows.length === 0) {
             return res.status(404).json({ error: 'Keine Artikel gefunden' });
         }
-        res.status(200).json(rows);
+        res.status(500).json(rows);
     });
 });
 
