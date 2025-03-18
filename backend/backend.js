@@ -103,6 +103,34 @@ app.post("/currency", async (req, res) => {
   res.json({ success: true, rate, convertedAmount });
 });
 
+// Route für Flagge von Währung
+const currencyToIso = {
+  eur: "eu",
+  usd: "us",
+  gbp: "gb",
+  jpy: "jp",
+  krw: "kr",
+  cny: "cn",
+  mxn: "mx",
+};
+
+// API-Endpunkt, der den ISO-Code basierend auf der Währung zurückgibt
+app.post("/get-flag", (req, res) => {
+  const { currency } = req.body;
+
+  if (!currency || !currencyToIso[currency]) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Ungültige Währung!" });
+  }
+
+  // ISO-Code für die Währung finden
+  const isoCode = currencyToIso[currency];
+  const flagUrl = `https://flagcdn.com/w320/${isoCode}.png`;
+
+  res.json({ success: true, isoCode, flagUrl });
+});
+
 // Server starten
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
