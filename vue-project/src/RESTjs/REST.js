@@ -35,12 +35,9 @@ export async function fetchArticles() {
 
 export async function fetchSearchArticles(searchstring) {
     try {
-      const response = await fetch(serverURL+"/searcharticles",{
+      const response = await fetch(serverURL+"/searcharticles?searchstring=" + encodeURIComponent(searchstring),{
         method: "GET",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          "searchstring": searchstring
-        }),
       }); // Beispiel-API
 
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
@@ -55,12 +52,9 @@ export async function fetchSearchArticles(searchstring) {
 
 export async function fetchMyArticles() {
     try {
-      const response = await fetch(serverURL+"/myarticles",{
+      const response = await fetch(serverURL+"/myarticles?userID="+encodeURIComponent(userID),{
         method: "GET",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          "userID": userID
-        }),
       }); // Beispiel-API
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
@@ -120,12 +114,9 @@ export async function registerUser(email,username,password) {
 
 export async function fetchCurrencyRate(currency) {
   try {
-    const response = await fetch(serverURL+"/currency",{
+    const response = await fetch(serverURL+"/currency?currency="+encodeURIComponent(currency),{
       method: "GET",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        "currency": currency
-      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
@@ -139,12 +130,9 @@ export async function fetchCurrencyRate(currency) {
 
 export async function fetchFlagURL(country) {
   try {
-    const response = await fetch(serverURL+"/flag",{
+    const response = await fetch(serverURL+"/flag?country="+encodeURIComponent(country),{
       method: "GET",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        "country": country
-      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
