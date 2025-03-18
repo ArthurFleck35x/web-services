@@ -17,7 +17,7 @@ app.use(express.json());
 
 // Route zum Abrufen der Artikel eines bestimmten Nutzers
 app.get('/myarticles', (req, res) => {
-    const { userId } = req.query;
+    const { userId } = req.json.userID;
     
     if (!userId) {
         return res.status(400).json({ error: 'userId muss angegeben werden' });
@@ -35,14 +35,14 @@ app.get('/myarticles', (req, res) => {
 });
 
 // Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
-app.get('/searcharticle/:id', (req, res) => {
-    const { id } = req.params;  // ID aus der URL entnehmen
+app.get('/searcharticles', (req, res) => {
+    const { title } = req.json.searchstring  // ID aus der URL entnehmen
     
     if (!id) {
         return res.status(400).json({ error: 'Artikel-ID muss angegeben werden' });
     }
     
-    const query = "SELECT * FROM artikel WHERE id = ?";
+    const query = "SELECT * FROM artikel WHERE LIKE %title% = ?";
     
     db.get(query, [id], (err, row) => {
         if (err) {

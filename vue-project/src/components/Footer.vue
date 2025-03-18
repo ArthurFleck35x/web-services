@@ -22,7 +22,7 @@
                 </div>
                 <!--Copyright-->
                 <div class="text-center mt-4 border-top pt-3">
-                    <p class="text-secondary">© {{ currentYear }} UniPlace</p>
+                    <p class="text-secondary">© {{ currentYear }} MindGeek</p>
                 </div>
             </div>
         </div>
