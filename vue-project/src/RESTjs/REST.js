@@ -17,7 +17,7 @@ export function setLoggedIn(state){
 }
 
 export function getCurrencyRate(){
-  registerUser = currencyRate;
+  return currencyRate;
 }
 
 export async function fetchArticles() {
