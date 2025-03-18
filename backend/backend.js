@@ -42,9 +42,9 @@ app.get('/searcharticles', (req, res) => {
         return res.status(400).json({ error: 'Artikel-ID muss angegeben werden' });
     }
     
-    const query = "SELECT * FROM artikel WHERE LIKE %title% = ?";
+    const query = "SELECT * FROM artikel WHERE title LIKE ?";
     
-    db.get(query, [id], (err, row) => {
+    db.get(query, ["%"+title+"%"], (err, row) => {
         if (err) {
             res.status(500).json({ error: 'Fehler beim Abrufen des Artikels' });
             return;
