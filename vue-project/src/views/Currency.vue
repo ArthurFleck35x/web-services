@@ -147,16 +147,21 @@ export default {
         selectedCurrency: "USD",
         currencyRate: null,
         flagURL: "",
-        currencies: ["USD", "EUR", "GBP", "JPY", "CHF"]
+        currencies: ["USD", "EUR", "GBP", "JPY", "CHF", "CNY","MXN"]
         };
     },
     methods: {
         async updateCurrencyRate() {
+        try {
             this.currencyRate = await fetchCurrencyRate(this.selectedCurrency);
-            this.flagURL = await fetchFlagURL(this.getCountryByCurrency(this.selectedCurrency));
+            const country = this.getCountryByCurrency(this.selectedCurrency);
+            this.flagURL = await fetchFlagURL(country);
+        } catch (error) {
+            console.error("Fehler beim Laden der Währungsdaten:", error);
+        }
         },
         getCountryByCurrency(currency) {
-            const currencyMap = {
+        const currencyMap = {
             "USD": "United States",
             "EUR": "Germany",
             "GBP": "United Kingdom",
@@ -164,12 +169,12 @@ export default {
             "CHF": "Switzerland",
             "CNY": "China",
             "MXN": "Mexico"
-            };
+        };
         return currencyMap[currency] || "Unknown";
         }
     },
-    mounted() {
-        this.updateCurrencyRate();
+    async mounted() {
+        await this.updateCurrencyRate();
     }
 };
 </script>
