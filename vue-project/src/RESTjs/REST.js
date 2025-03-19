@@ -24,9 +24,13 @@ export function getCurrencyRate(){
   return currencyRate;
 }
 
+export function getCurrencySymbol(){
+  return myCurrencySymbol;
+}
+
 export async function fetchArticles() {
     try {
-      const response = await fetch(serverURL+"/articles"); // Beispiel-API
+      const response = await fetch(serverURL+"/articles"); 
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren
@@ -42,7 +46,7 @@ export async function fetchSearchArticles(searchstring) {
       const response = await fetch(serverURL+"/searcharticles?searchstring=" + encodeURIComponent(searchstring),{
         method: "GET",
         headers: {"Content-Type": "application/json"},
-      }); // Beispiel-API
+      }); 
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren

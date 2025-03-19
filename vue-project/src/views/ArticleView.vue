@@ -46,10 +46,12 @@ function closePupUp(){
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();
-    //products.value = fetchArticles();
-    fetchSearchArticles("a").then(data=>{
+    fetchArticles().then(data => {
         products.value = data;
     });
+    /*fetchSearchArticles("a").then(data=>{
+        products.value = data;
+    });*/
 })
 
 </script>

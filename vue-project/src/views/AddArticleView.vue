@@ -54,7 +54,7 @@ const submitArticle = () => {
         setTimeout(() => {
             isSuccessVisible.value = false;
         }, 2000);
-        //createNewArticle(productForm.value.title,productForm.value.price,productForm.value.count,productForm.value.description);
+        createNewArticle(productForm.value.title,productForm.value.price,productForm.value.count,productForm.value.description);
         clearProductForm();
     }else{
         errormessage.value = "Please input all information"
