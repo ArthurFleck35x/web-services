@@ -17,15 +17,15 @@ app.use(express.json());
 
 // PROFILE DB
 app.get("/api/myarticles", (req, res) => {
-  const { userId } = req.query;
+  const { userID } = req.query;
 
-  if (!userId) {
-    return res.status(400).json({ error: "userId muss angegeben werden" });
+  if (!userID) {
+    return res.status(400).json({ error: "userID muss angegeben werden" });
   }
 
   const query = "SELECT * FROM artikel WHERE user_id = ?";
 
-  db.all(query, [userId], (err, rows) => {
+  db.all(query, [userID], (err, rows) => {
     if (err) {
       res.status(500).json({ error: "Fehler beim Abrufen der Artikel" });
       return;
@@ -34,25 +34,25 @@ app.get("/api/myarticles", (req, res) => {
   });
 });
 
-// SEARCH DB
-app.get('/api/searcharticles', (req, res) => {
-    const { searchstring } = req.query; 
-    
-    if (!searchstring) {
-        return res.status(400).json({ error: 'Suchstring muss angegeben werden' });
+// Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
+app.get("/api/searcharticles", (req, res) => {
+  const { searchstring } = req.query; // Suchbegriff aus der Anfrage
+
+  if (!searchstring) {
+    return res.status(400).json({ error: "Suchstring muss angegeben werden" });
+  }
+
+  const query = "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
+
+  db.all(query, [`%${searchstring}%`, `%${searchstring}%`], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: "Fehler beim Abrufen der Artikel" });
     }
-
-    const query = "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
-
-    db.all(query, [`%${searchstring}%`, `%${searchstring}%`], (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: 'Fehler beim Abrufen der Artikel' });
-        }
-        if (!rows || rows.length === 0) {
-            return res.status(404).json({ error: 'Keine Artikel gefunden' });
-        }
-        res.status(500).json(rows);
-    });
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ error: "Keine Artikel gefunden" });
+    }
+    res.status(200).json(rows);
+  });
 });
 
 //ALL_ARTICLES DB
@@ -96,6 +96,33 @@ app.post('/api/newarticle', (req, res) => {
 
 
 
+// Route für Flagge von Währung
+const currencyToIso = {
+  eur: "eu",
+  usd: "us",
+  gbp: "gb",
+  jpy: "jp",
+  krw: "kr",
+  cny: "cn",
+  mxn: "mx",
+};
+
+// API-Endpunkt, der den ISO-Code basierend auf der Währung zurückgibt
+app.post("/get-flag", (req, res) => {
+  const { currency } = req.body;
+
+  if (!currency || !currencyToIso[currency]) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Ungültige Währung! " });
+  }
+
+  // ISO-Code für die Währung finden
+  const isoCode = currencyToIso[currency];
+  const flagUrl = `https://flagcdn.com/w320/${isoCode}.png`;
+
+  res.json({ success: true, isoCode, flagUrl });
+});
 
 // Server starten
 const PORT = process.env.PORT || 3000;
