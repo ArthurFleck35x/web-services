@@ -25,6 +25,9 @@
                 
                 <label><strong>Beschreibung:</strong></label>
                 <textarea v-model="certainProduct.description"></textarea>
+
+                <p>{{ certainProduct.email }}</p>
+
             </div>
 
             <!-- Anzeige-Modus -->
@@ -35,6 +38,7 @@
                 <div class="description-box">
                 <p><strong>Beschreibung:</strong></p>
                 <p>{{ certainProduct.description }}</p>
+                <p>{{ certainProduct.email }}</p>
                 </div>
             </div>
 
@@ -159,6 +163,7 @@ onMounted(()=>{
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .popup {
