@@ -72,26 +72,27 @@ app.get('/api/articles', (req, res) => {
 
 //ARTIKEL CREATION
 app.post('/api/newarticle', (req, res) => {
-  const { id, user_id, title, description, price, category, count, currency } = req.body;
+  const { user_id, title, description, price, count } = req.body;
 
-  if (!id || !user_id || !title || !description || !price || !category || !count || !currency) {
-      return res.status(400).json({ error: 'Alle Felder müssen ausgefüllt sein' });
+  if (!user_id || !title || !description || !price || !count) {
+      return res.status(400).json({ error: 'Alle Pflichtfelder müssen ausgefüllt sein' });
   }
 
   const created_at = new Date().toISOString();
 
   const query = `
-      INSERT INTO artikel (id, user_id, title, description, price, category, created_at, count, currency) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
+      INSERT INTO artikel (user_id, title, description, price, count, created_at) 
+      VALUES (?, ?, ?, ?, ?, ?)
+      `;
 
-  db.run(query, [id, user_id, title, description, price, category, created_at, count, currency], function (err) {
+  db.run(query, [user_id, title, description, price, count, created_at], function (err) {
       if (err) {
           return res.status(500).json({ error: 'Fehler beim Einfügen des Artikels' });
       }
       res.status(201).json({ message: 'Artikel erfolgreich hinzugefügt', articleId: this.lastID });
   });
 });
+
 
 
 
