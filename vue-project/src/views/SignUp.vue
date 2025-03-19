@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <button class="right element" @click="signUp">
+            <button class="right element button" @click="signUp">
                 <span>Sign Up</span>
             </button>
 
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div>
-                    <button class="bottom5" @click="goToLogIn">Login</button>
+                    <button class="bottom5 button" @click="goToLogIn">Login</button>
                 </div>
             </div>
         </div>
@@ -221,6 +221,31 @@ h4 {
     font-weight: bold;
     color: white; /* Oder eine passende Farbe */
     text-align: center;
+}
+.button {
+    background:  linear-gradient(to right, #1a202c, #2d3748, #4a5568);
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s; 
+    display: inline-block;
+    cursor: pointer;
+    display: inline-block;
+    padding: 15px 25px;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+}
+
+.button:hover {opacity: 1}
+.button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 /*Schrift mittig*/
 .fonts {
