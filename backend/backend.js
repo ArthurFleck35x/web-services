@@ -42,7 +42,8 @@ app.get("/api/searcharticles", (req, res) => {
     return res.status(400).json({ error: "Suchstring muss angegeben werden" });
   }
 
-  const query = "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
+  const query =
+    "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
 
   db.all(query, [`%${searchstring}%`, `%${searchstring}%`], (err, rows) => {
     if (err) {
@@ -67,7 +68,7 @@ const currencyToIso = {
 };
 
 // API-Endpunkt, der den ISO-Code basierend auf der Währung zurückgibt
-app.post("/get-flag", (req, res) => {
+app.post("/api/get-flag", (req, res) => {
   const { currency } = req.body;
 
   if (!currency || !currencyToIso[currency]) {
@@ -80,7 +81,70 @@ app.post("/get-flag", (req, res) => {
   const isoCode = currencyToIso[currency];
   const flagUrl = `https://flagcdn.com/w320/${isoCode}.png`;
 
-  res.json({ success: true, isoCode, flagUrl });
+  res.status(200).json({ success: true, isoCode, flagUrl });
+});
+
+//Route um Währung umzurechnen
+const FILE_PATH = path.join(__dirname, "exchange_rates.json");
+
+const currencySymbols = {
+  eur: "€",
+  usd: "$",
+  gbp: "£",
+  jpy: "¥",
+  krw: "₩",
+  cny: "¥",
+  mxn: "MX$",
+};
+
+async function getExchangeRate(targetCurrency) {
+  const baseCurrency = "eur"; // Setze die Base-Währung immer auf "eur"
+
+  try {
+    console.log("Lese Wechselkurse aus der lokalen Datei...");
+    const data = JSON.parse(fs.readFileSync(FILE_PATH, "utf-8"));
+
+    if (!data[baseCurrency] || !data[baseCurrency][targetCurrency]) {
+      throw new Error(
+        `Wechselkurs für ${baseCurrency} -> ${targetCurrency} nicht gefunden.`
+      );
+    }
+
+    return data[baseCurrency][targetCurrency];
+  } catch (error) {
+    console.error("Fehler in getExchangeRate:", error);
+    return null;
+  }
+}
+
+app.post("/currency", async (req, res) => {
+  console.log("🔄 Anfrage erhalten:", req.body);
+
+  const { targetCurrency, amount } = req.body;
+  if (!targetCurrency || !amount) {
+    return res
+      .status(400)
+      .json({ success: false, message: "⚠️ Fehlende Parameter!" });
+  }
+
+  const rate = await getExchangeRate(targetCurrency);
+  if (rate === null) {
+    return res.status(500).json({
+      success: false,
+      message:
+        "❌ Fehler beim Abrufen des Wechselkurses. Keine Daten in der Datei.",
+    });
+  }
+
+  const currencySymbol =
+    currencySymbols[targetCurrency.toLowerCase()] ||
+    targetCurrency.toUpperCase();
+
+  res.status(200).json({
+    success: true,
+    rate,
+    currencySymbol,
+  });
 });
 
 // Server starten
