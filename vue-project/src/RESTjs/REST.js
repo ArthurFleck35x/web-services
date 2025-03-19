@@ -68,7 +68,7 @@ export async function fetchMyArticles() {
 export async function checkLoginData(email,username,password) {
   try {
     const response = await fetch(serverURL+"/login",{
-      method: "PUT",
+      method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
         "email": email,
