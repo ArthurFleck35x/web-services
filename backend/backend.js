@@ -112,11 +112,78 @@ app.get("/api/currency", async (req, res) => {
   });
 });
 
+app.get("/api/login",(req,res)=>{
+  getlogin(req,res).then(data=>{
+    res.status(200).json(data.json)
+  })
+})
 
 
+//USERS
+async function getlogin(req,res) {
+  try {
+    const response = await fetch(serverURL+"/login",{
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        "email": email,
+        "username": username,
+        "password": password
+      }),
+    }); // Beispiel-API
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: '+ response.json().error);
+
+    const data = await response.json();
+    
+    userID = data.userId;
+
+    setLoggedIn(true);
+
+    return true;
+
+  } catch (error) {
+    console.error('Fehler:', error);
+    return false; 
+  }
+}
+app.post('/api/register', (req, res) =>{
+setRegister(req,res).then(data=>{
+  setRegister(req,res).then(data=>{
+    res.status(200).json(data.json)
+  })
+})
 
 
+})
 
+async function setRegister(req,res) {
+  try {
+    const response = await fetch(serverURL+"/register",{
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        "email": email,
+        "username": username,
+        "password": password
+      }),
+    }); // Beispiel-API
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ' + response.json().error);
+
+    const data = await response.json(); // JSON-Daten extrahieren
+    
+    userID = data.userId;
+    
+    setLoggedIn(true);
+
+    return true;
+
+  } catch (error) {
+    console.error('Fehler:', error);
+    return false; // Rückgabe einer leeren Liste im Fehlerfall
+  }
+}
+
+//ARTSEARCH
 app.get("/api/articles", (req, res) => {
   getarticles(req, res).then(data=>{
     res.status(200).json(data);
