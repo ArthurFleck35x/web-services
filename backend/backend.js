@@ -24,7 +24,11 @@ app.get("/api/myarticles", (req, res) => {
     return res.status(400).json({ error: "userID muss angegeben werden" });
   }
 
-  const query = "SELECT * FROM artikel WHERE user_id = ?";
+  const query = `
+    SELECT * FROM artikel
+    JOIN user ON artikel.user_id = user.user_id
+    WHERE user_id=?
+  `;
 
   db.all(query, [userID], (err, rows) => {
     if (err) {
