@@ -112,7 +112,7 @@ app.get("/api/currency", async (req, res) => {
   });
 });
 
-app.get("/login",(req,res)=>{
+app.get("/api/login",(req,res)=>{
   getlogin(req,res).then(data=>{
     res.status(200).json(data.json)
   })
@@ -144,11 +144,9 @@ async function getlogin(req,res) {
     return false; 
   }
 }
+app
 
-
-
-
-app.get("/articles", (req, res) => {
+app.get("/api/articles", (req, res) => {
   getarticles(req, res).then(data=>{
     res.status(200).json(data.json())
   })
