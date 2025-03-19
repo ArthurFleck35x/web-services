@@ -1,12 +1,16 @@
 const serverURL = "/api";
 
-var userID;
+var userID=1;
 
 var currencyRate = 1;
 
 var loggedIn = false;
 
 var flagURL = "";
+
+var myCurrency = "eur"
+
+var myCurrencySymbol = "€"
 
 export function isLoggedIn(){
   return loggedIn;
@@ -17,7 +21,7 @@ export function setLoggedIn(state){
 }
 
 export function getCurrencyRate(){
-  registerUser = currencyRate;
+  return currencyRate;
 }
 
 export async function fetchArticles() {
@@ -39,7 +43,6 @@ export async function fetchSearchArticles(searchstring) {
         method: "GET",
         headers: {"Content-Type": "application/json"},
       }); // Beispiel-API
-
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren
@@ -69,7 +72,7 @@ export async function fetchMyArticles() {
 export async function checkLoginData(email,username,password) {
   try {
     const response = await fetch(serverURL+"/login",{
-      method: "PUT",
+      method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
         "email": email,
@@ -122,35 +125,45 @@ export async function fetchCurrencyRate(currency) {
 
     const data = await response.json(); // JSON-Daten extrahieren
 
+    myCurrency = currency;
+
+
+
   } catch (error) {
     console.error('Fehler:', error);
     return []; // Rückgabe einer leeren Liste im Fehlerfall
   }
 }
 
-export async function fetchFlagURL(country) {
+export async function fetchFlagURL() {
   try {
-    const response = await fetch(serverURL+"/flag?country="+encodeURIComponent(country),{
+    const response = await fetch(serverURL+"/get-flag?currency="+encodeURIComponent(myCurrency),{
       method: "GET",
       headers: {"Content-Type": "application/json"},
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
     const data = await response.json(); // JSON-Daten extrahieren
-        flagURL = data.flagURL;
-        return flagURL;
+    flagURL = data.flagUrl;
+    return flagURL;
   } catch (error) {
     console.error('Fehler:', error);
     return []; // Rückgabe einer leeren Liste im Fehlerfall
   }
 }
 
-export async function createNewArticle() {
+export async function createNewArticle(title,price,count,description) {
   try {
     const response = await fetch(serverURL+"/newarticle",{
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(),
+      body: JSON.stringify({
+        "title": title,
+        "price": price,
+        "count": count,
+        "description": description,
+        "userID": userID,
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
@@ -162,12 +175,18 @@ export async function createNewArticle() {
   }
 }
 
-export async function updateArticle() {
+export async function updateArticle(product) {
   try {
     const response = await fetch(serverURL+"/updatearticle",{
       method: "PUT",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(),
+      body: JSON.stringify({
+        "id": product.id,
+        "title": product.title,
+        "description": product.description,
+        "price": product.price,
+        "count": product.count,
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
@@ -179,12 +198,14 @@ export async function updateArticle() {
   }
 }
 
-export async function deleteArticle() {
+export async function deleteArticle(id) {
   try {
     const response = await fetch(serverURL+"/deletearticle",{
       method: "DELETE",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(),
+      body: JSON.stringify({
+        "id": id
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
