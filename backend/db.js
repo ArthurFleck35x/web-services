@@ -13,7 +13,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 //ARTICLE SEARCH
-app.get("/api/searcharticles", (req, res) => {
+app.get("/searcharticles", (req, res) => {
   const { searchstring } = req.query; 
 
   if (!searchstring) {
@@ -40,7 +40,7 @@ app.get("/api/searcharticles", (req, res) => {
 });
 
 // PROFILE DB
-app.get("/api/myarticles", (req, res) => {
+app.get("/myarticles", (req, res) => {
   const { userID } = req.query;
 
   if (!userID) {
@@ -84,7 +84,7 @@ app.get("/articles", (req, res) => {
 });
 
 //ARTIKEL CREATION
-app.post("/api/newarticle", (req, res) => {
+app.post("/newarticle", (req, res) => {
   const { userID, title, price, count, description } = req.body;
 
   if (!userID || !title || !description || !price || !count) {
@@ -118,7 +118,7 @@ app.post("/api/newarticle", (req, res) => {
 });
 
 //ITEM DELEITION
-app.delete('/api/deletearticle', (req, res) => {
+app.delete('/deletearticle', (req, res) => {
   const { id } = req.body; // Artikel-ID aus dem Body extrahieren
 
   if (!id) {
@@ -139,7 +139,7 @@ app.delete('/api/deletearticle', (req, res) => {
   });
 });
 //update ITEM
-app.put('/api/updatearticle', (req, res) => {
+app.put('/updatearticle', (req, res) => {
   const { id, title, description, price, count } = req.body;
 
   if (!id || !title || !description || !price || !count) {
@@ -169,7 +169,7 @@ app.put('/api/updatearticle', (req, res) => {
 
 //USERS
 //LOGIN
-app.post('/api/login', (req, res) => {
+app.post('/login', (req, res) => {
   const { email, username, password } = req.body; // Daten aus dem Body extrahieren
 
   if (!email || !username || !password) {
@@ -194,7 +194,7 @@ app.post('/api/login', (req, res) => {
   });
 });
 //REGISTER USER
-app.post('/api/register', (req, res) => {
+app.post('/register', (req, res) => {
   const { username, email, password } = req.body;
 
   // Überprüfen, ob alle Felder vorhanden sind

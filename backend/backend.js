@@ -112,14 +112,15 @@ app.get("/api/currency", async (req, res) => {
   });
 });
 
-app.get("/api/login",(req,res)=>{
-  getlogin(req,res).then(data=>{
-    res.status(200).json(data.json)
-  })
-})
+
 
 
 //USERS
+app.get("/api/login",(req,res)=>{
+  getlogin(req,res).then(data=>{
+    res.status(200).json(data)
+  })
+})
 async function getlogin(req,res) {
   try {
     const response = await fetch(serverURL+"/login",{
@@ -149,7 +150,7 @@ async function getlogin(req,res) {
 app.post('/api/register', (req, res) =>{
 setRegister(req,res).then(data=>{
   setRegister(req,res).then(data=>{
-    res.status(200).json(data.json)
+    res.status(200).json(data)
   })
 })
 
@@ -205,7 +206,7 @@ async function getarticles(req, res) {
 }
 app.get("/api/searcharticles", (req, res) => {
   getSarticles(req,res).then(data=>{
-res.status(200).json(data.json())
+res.status(200).json(data)
   })
 
 })
@@ -226,7 +227,7 @@ async function getSarticles(req,res) {
 }
 app.get("/api/myarticles", (req, res) => {
 getMyArticles(req,res).then(data=>{
-  res.status(200).json(data.json())
+  res.status(200).json(data)
 })
 })
 async function getMyArticles(req,res) {
@@ -248,7 +249,7 @@ async function getMyArticles(req,res) {
 //Article edit
 app.post("/api/newarticle", (req, res) => {
   setNewArticle(req,res).then(data=>{
-    res.status(200).json(data.json())
+    res.status(200).json(data)
   })
 })
 async function setNewArticle(req,res) {
@@ -277,7 +278,7 @@ async function setNewArticle(req,res) {
 
 app.delete('/api/deletearticle', (req, res) => {
  setdelArticle(req,res).then(data=>{
-  res.status(200).json(data.json)
+  res.status(200).json(data)
  })
 })
 async function setdelArticle(req,res) {
@@ -299,6 +300,7 @@ async function setdelArticle(req,res) {
   }
   
 }
+
 
 
 
