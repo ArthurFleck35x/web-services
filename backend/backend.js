@@ -57,26 +57,28 @@ app.get("/api/searcharticles", (req, res) => {
 });
 
 //ALL_ARTICLES DB
-app.get('/api/articles', (req, res) => {
+app.get("/api/articles", (req, res) => {
   const query = "SELECT * FROM artikel";
 
   db.all(query, [], (err, rows) => {
-      if (err) {
-          return res.status(500).json({ error: 'Fehler beim Abrufen der Artikel' });
-      }
-      if (!rows || rows.length === 0) {
-          return res.status(404).json({ error: 'Keine Artikel gefunden' });
-      }
-      res.status(200).json(rows);
+    if (err) {
+      return res.status(500).json({ error: "Fehler beim Abrufen der Artikel" });
+    }
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ error: "Keine Artikel gefunden" });
+    }
+    res.status(200).json(rows);
   });
 });
 
 //ARTIKEL CREATION
-app.post('/api/newarticle', (req, res) => {
+app.post("/api/newarticle", (req, res) => {
   const { user_id, title, description, price, count } = req.body;
 
   if (!user_id || !title || !description || !price || !count) {
-      return res.status(400).json({ error: 'Alle Pflichtfelder müssen ausgefüllt sein' });
+    return res
+      .status(400)
+      .json({ error: "Alle Pflichtfelder müssen ausgefüllt sein" });
   }
 
   const created_at = new Date().toISOString();
@@ -86,17 +88,24 @@ app.post('/api/newarticle', (req, res) => {
       VALUES (?, ?, ?, ?, ?, ?)
       `;
 
-  db.run(query, [user_id, title, description, price, count, created_at], function (err) {
+  db.run(
+    query,
+    [user_id, title, description, price, count, created_at],
+    function (err) {
       if (err) {
-          return res.status(500).json({ error: 'Fehler beim Einfügen des Artikels' });
+        return res
+          .status(500)
+          .json({ error: "Fehler beim Einfügen des Artikels" });
       }
-      res.status(201).json({ message: 'Artikel erfolgreich hinzugefügt', articleId: this.lastID });
-  });
+      res
+        .status(201)
+        .json({
+          message: "Artikel erfolgreich hinzugefügt",
+          articleId: this.lastID,
+        });
+    }
+  );
 });
-
-
-
-
 
 // Route für Flagge von Währung
 const currencyToIso = {
