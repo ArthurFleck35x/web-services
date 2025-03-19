@@ -390,7 +390,7 @@ h4 {
   margin-left: 45%;
   width: 10%;
   height: auto;
-  position: absolute;
+  position: fixed;
   border-radius: 10px;
   z-index: 400;
 }

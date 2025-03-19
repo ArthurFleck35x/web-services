@@ -6,6 +6,7 @@ import LogIn from '@/views/LogIn.vue'
 import Currency from '@/views/Currency.vue'
 import { isLoggedIn } from '@/RESTjs/REST'
 import MyArticlesView from '@/views/MyArticlesView.vue'
+import AddArticleView from '@/views/AddArticleView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +49,12 @@ const router = createRouter({
       path: '/myarticles',
       name: 'myarticels',
       component: MyArticlesView,
+      meta: {requiresAuth: true},
+    },
+    {
+      path: '/addarticle',
+      name: 'addarticle',
+      component: AddArticleView,
       meta: {requiresAuth: true},
     }
     /*{

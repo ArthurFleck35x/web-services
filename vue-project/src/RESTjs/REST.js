@@ -144,12 +144,18 @@ export async function fetchFlagURL(country) {
   }
 }
 
-export async function createNewArticle() {
+export async function createNewArticle(title,price,count,description) {
   try {
     const response = await fetch(serverURL+"/newarticle",{
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(),
+      body: JSON.stringify({
+        "title": title,
+        "price": price,
+        "count": count,
+        "description": description,
+        "userID": userID,
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 

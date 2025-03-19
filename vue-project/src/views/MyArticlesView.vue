@@ -51,7 +51,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { getCurrencyRate,fetchMyArticles,deleteArticle,updateArticle } from '@/RESTjs/REST';
-import e from 'cors';
 
 var certainProduct;
 
