@@ -64,7 +64,7 @@ app.get("/api/myarticles", (req, res) => {
 });
 
 //ALL_ARTICLES DB
-app.get("/api/articles", (req, res) => {
+app.get("/articles", (req, res) => {
   
   const query = `
     SELECT artikel.*, user.email

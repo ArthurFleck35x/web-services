@@ -2,7 +2,7 @@ const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
-const serverURL = "https://localhost:3001"
+const serverURL = "http://localhost:3001"
 const app = express();
 const dbPath = path.resolve(__dirname, "Marketplace_DB.db");
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -117,16 +117,17 @@ app.get("/api/currency", async (req, res) => {
 
 
 
-app.get("/articles", (req, res) => {
+app.get("/api/articles", (req, res) => {
   getarticles(req, res).then(data=>{
-    res.status(200).json(data.json())
+    res.status(200).json(data);
   })
 })
 
 async function getarticles(req, res) {
   try {
     const response = await fetch(serverURL+"/articles"); 
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+    
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ');
 
     const data = await response.json(); // JSON-Daten extrahieren
     return data; // Rückgabe der JSON-Objekte als Liste
