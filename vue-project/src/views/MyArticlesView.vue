@@ -1,6 +1,6 @@
 
 <template>
-    <div class="bg-special">
+    <div class="bg-special" :class="{'too-few-products': tooFewProducts}">
         <div class="product-item" v-for="product in products">
             <p class="product-field"><strong>Produkt:</strong> {{ product.title }}</p>
             <p class="product-field"><strong>Preis:</strong> {{ product.price * currencyRate}}€</p>
@@ -23,13 +23,15 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { getCurrencyRate,fetchArticles,fetchSearchArticles } from '@/RESTjs/REST';
+import { getCurrencyRate,fetchMyArticles } from '@/RESTjs/REST';
 
 var certainProduct;
 
 var currencyRate;
 
 var isPopupVisible = ref(false);
+
+var tooFewProducts = ref(false)
 
 const products = ref([]);
 
@@ -47,9 +49,13 @@ function closePupUp(){
 onMounted(()=>{
     currencyRate = getCurrencyRate();
     //products.value = fetchArticles();
-    fetchSearchArticles("a").then(data=>{
+    fetchMyArticles().then(data=>{
         products.value = data;
     });
+
+    if(products.value.length<3){
+        tooFewProducts.value = true;
+    }
 })
 
 </script>
@@ -122,5 +128,9 @@ onMounted(()=>{
   padding: 10px;
   margin-top: 10px;
   border-radius: 5px;
+}
+
+.too-few-products {
+    height: 250px;
 }
 </style>

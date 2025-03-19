@@ -1,6 +1,6 @@
 const serverURL = "/api";
 
-var userID;
+var userID=1;
 
 var currencyRate = 1;
 
