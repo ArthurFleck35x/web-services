@@ -150,7 +150,7 @@ async function getExchangeRate(targetCurrency) {
   const baseCurrency = "eur"; // Setze die Base-Währung immer auf "eur"
 
   try {
-    console.log("Lese Wechselkurse aus der lokalen Datei...");
+    console.log("Lese Wechselkurse aus der lokalen Datei..");
     const data = JSON.parse(fs.readFileSync(FILE_PATH, "utf-8"));
 
     if (!data[baseCurrency] || !data[baseCurrency][targetCurrency]) {
