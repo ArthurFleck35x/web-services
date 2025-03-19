@@ -127,7 +127,9 @@ export async function fetchCurrencyRate(currency) {
 
     myCurrency = currency;
 
+    currencyRate = data.rate;
 
+    myCurrencySymbol = data.currencySymbol;
 
   } catch (error) {
     console.error('Fehler:', error);
@@ -158,11 +160,11 @@ export async function createNewArticle(title,price,count,description) {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
+        "userID": userID,
         "title": title,
         "price": price,
         "count": count,
         "description": description,
-        "userID": userID,
       }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
