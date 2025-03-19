@@ -260,27 +260,32 @@ h4 {
   text-align: center;
 }
 .button {
-  background-color:#4a5568;
+  background:  linear-gradient(to right, #1a202c, #2d3748, #4a5568);
   border: none;
   color: white;
   padding: 16px 32px;
   text-align: center;
+  font-size: 16px;
   margin: 4px 2px;
   opacity: 0.6;
-  transition: 0.3s;
+  transition: 0.3s; 
   display: inline-block;
   cursor: pointer;
   display: inline-block;
   padding: 15px 25px;
   outline: none;
   border: none;
+  border-radius: 15px;
 }
 
-.button:hover {opacity: 10}
+.button:hover {opacity: 1}
 .button:active {
-  background-color: #2d3748;
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+
 /*Text nach rechts verschieben*/
 .right {
   margin-left: 10%;
