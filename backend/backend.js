@@ -17,15 +17,15 @@ app.use(express.json());
 
 // Route zum Abrufen der Artikel eines bestimmten Nutzers
 app.get("/api/myarticles", (req, res) => {
-  const { userId } = req.query;
+  const { userID } = req.query;
 
-  if (!userId) {
-    return res.status(400).json({ error: "userId muss angegeben werden" });
+  if (!userID) {
+    return res.status(400).json({ error: "userID muss angegeben werden" });
   }
 
   const query = "SELECT * FROM artikel WHERE user_id = ?";
 
-  db.all(query, [userId], (err, rows) => {
+  db.all(query, [userID], (err, rows) => {
     if (err) {
       res.status(500).json({ error: "Fehler beim Abrufen der Artikel" });
       return;

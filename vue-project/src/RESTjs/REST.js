@@ -161,12 +161,18 @@ export async function createNewArticle() {
   }
 }
 
-export async function updateArticle() {
+export async function updateArticle(product) {
   try {
     const response = await fetch(serverURL+"/updatearticle",{
       method: "PUT",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(),
+      body: JSON.stringify({
+        "id": product.id,
+        "title": product.title,
+        "description": product.description,
+        "price": product.price,
+        "count": product.count,
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
@@ -178,12 +184,14 @@ export async function updateArticle() {
   }
 }
 
-export async function deleteArticle() {
+export async function deleteArticle(id) {
   try {
     const response = await fetch(serverURL+"/deletearticle",{
       method: "DELETE",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(),
+      body: JSON.stringify({
+        "id": id
+      }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 

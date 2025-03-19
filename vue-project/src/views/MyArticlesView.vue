@@ -1,6 +1,6 @@
 
 <template>
-    <div class="bg-special" :class="{'too-few-products': tooFewProducts}">
+    <div class="bg-special" :class="{'too-few-products': tooFewProducts.value}">
         <div class="product-item" v-for="product in products">
             <p class="product-field"><strong>Produkt:</strong> {{ product.title }}</p>
             <p class="product-field"><strong>Preis:</strong> {{ product.price * currencyRate}}€</p>
@@ -9,25 +9,55 @@
         </div>
     </div>
     <div class="popup-overlay" v-if="isPopupVisible">
-        <div  class="popup">
+        <div class="popup">
             <h2>Produktdetails</h2>
-            <h3><strong>{{ certainProduct.title }}</strong></h3>
-            <div class="description-box">
+
+            <!-- Editierbare Felder -->
+            <div v-if="isEditing">
+                <label><strong>Produkt:</strong></label>
+                <input v-model="certainProduct.title" type="text" />
+                
+                <label><strong>Preis:</strong></label>
+                <input v-model.number="certainProduct.price" type="number" />
+                
+                <label><strong>Anzahl:</strong></label>
+                <input v-model.number="certainProduct.count" type="number" />
+                
+                <label><strong>Beschreibung:</strong></label>
+                <textarea v-model="certainProduct.description"></textarea>
+            </div>
+
+            <!-- Anzeige-Modus -->
+            <div v-else>
+                <p><strong>Produkt:</strong> {{ certainProduct.title }}</p>
+                <p><strong>Preis:</strong> {{ certainProduct.price * currencyRate }}€</p>
+                <p><strong>Anzahl:</strong> {{ certainProduct.count }}</p>
+                <div class="description-box">
                 <p><strong>Beschreibung:</strong></p>
                 <p>{{ certainProduct.description }}</p>
+                </div>
             </div>
-            <button class="close-button" @click="closePupUp()">Close</button>
+
+            <!-- Buttons -->
+            <div class="popup-buttons">
+                <button class="delete-button" @click="deleteProduct(certainProduct.id)">Löschen</button>
+                <button class="edit-button" @click="toggleEditMode">{{ isEditing ? 'Speichern' : 'Bearbeiten' }}</button>
+                <button class="close-button" @click="closePopup">Schließen</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { getCurrencyRate,fetchMyArticles } from '@/RESTjs/REST';
+import { getCurrencyRate,fetchMyArticles,deleteArticle,updateArticle } from '@/RESTjs/REST';
+import e from 'cors';
 
 var certainProduct;
 
 var currencyRate;
+
+const isEditing = ref(false);
 
 var isPopupVisible = ref(false);
 
@@ -36,25 +66,47 @@ var tooFewProducts = ref(false)
 const products = ref([]);
 
 function getDetails(product){
-    certainProduct = product;
+    certainProduct = { ...product };
     isPopupVisible.value = true;
+    isEditing.value = false;
 }
 
-function closePupUp(){
+const toggleEditMode = () => {
+    if(isEditing){
+        if(certainProduct.count>0){
+            updateArticle(certainProduct);
+        }else{
+            deleteProduct(certainProduct.id);
+        }
+    }
+    isEditing.value = !isEditing.value;
+};
+
+const deleteProduct = (id) => {
+    products.value = products.value.filter(product => product.id !== id);
+    deleteArticle(id);
+    closePopup();
+};
+
+function closePopup(){
     isPopupVisible.value = false;
 }
 
-
+function initialiseProducts(){
+    fetchMyArticles().then(data=>{
+        products.value = data;
+    });
+}
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();
     //products.value = fetchArticles();
-    fetchMyArticles().then(data=>{
-        products.value = data;
-    });
+    initialiseProducts();
 
-    if(products.value.length<3){
+    if(products.value.length<1){
         tooFewProducts.value = true;
+    }else{
+        tooFewProducts.value = false;
     }
 })
 
@@ -114,13 +166,44 @@ onMounted(()=>{
   color: black;
 }
 
-.close-button {
-  margin-top: 10px;
+/* Buttons */
+.popup-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.delete-button {
   background: red;
   color: white;
   padding: 8px 12px;
   border: none;
   cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button {
+  background: orange;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.close-button {
+  background: gray;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
 }
 
 .description-box {
