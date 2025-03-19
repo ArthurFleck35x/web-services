@@ -8,6 +8,10 @@ var loggedIn = false;
 
 var flagURL = "";
 
+var myCurrency = "eur"
+
+var myCurrencySymbol = "€"
+
 export function isLoggedIn(){
   return loggedIn;
 }
@@ -121,23 +125,27 @@ export async function fetchCurrencyRate(currency) {
 
     const data = await response.json(); // JSON-Daten extrahieren
 
+    myCurrency = currency;
+
+
+
   } catch (error) {
     console.error('Fehler:', error);
     return []; // Rückgabe einer leeren Liste im Fehlerfall
   }
 }
 
-export async function fetchFlagURL(country) {
+export async function fetchFlagURL() {
   try {
-    const response = await fetch(serverURL+"/flag?country="+encodeURIComponent(country),{
+    const response = await fetch(serverURL+"/get-flag?currency="+encodeURIComponent(myCurrency),{
       method: "GET",
       headers: {"Content-Type": "application/json"},
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
     const data = await response.json(); // JSON-Daten extrahieren
-        flagURL = data.flagURL;
-        return flagURL;
+    flagURL = data.flagUrl;
+    return flagURL;
   } catch (error) {
     console.error('Fehler:', error);
     return []; // Rückgabe einer leeren Liste im Fehlerfall
