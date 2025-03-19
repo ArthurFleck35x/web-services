@@ -73,9 +73,9 @@ app.get("/api/articles", (req, res) => {
 
 //ARTIKEL CREATION
 app.post("/api/newarticle", (req, res) => {
-  const { user_id, title, description, price, count } = req.body;
+  const { userID, title, price, count, description } = req.body;
 
-  if (!user_id || !title || !description || !price || !count) {
+  if (!userID || !title || !description || !price || !count) {
     return res
       .status(400)
       .json({ error: "Alle Pflichtfelder müssen ausgefüllt sein" });
@@ -90,7 +90,7 @@ app.post("/api/newarticle", (req, res) => {
 
   db.run(
     query,
-    [user_id, title, description, price, count, created_at],
+    [userID, title, description, price, count, created_at],
     function (err) {
       if (err) {
         return res
@@ -171,8 +171,8 @@ async function getExchangeRate(targetCurrency) {
 app.post("/currency", async (req, res) => {
   console.log("🔄 Anfrage erhalten:", req.body);
 
-  const { targetCurrency, amount } = req.body;
-  if (!targetCurrency || !amount) {
+  const { targetCurrency } = req.body;
+  if (!targetCurrency) {
     return res
       .status(400)
       .json({ success: false, message: "⚠️ Fehlende Parameter!" });
