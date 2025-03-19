@@ -42,8 +42,7 @@ app.get("/api/searcharticles", (req, res) => {
     return res.status(400).json({ error: "Suchstring muss angegeben werden" });
   }
 
-  const query =
-    "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
+  const query = "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
 
   db.all(query, [`%${searchstring}%`, `%${searchstring}%`], (err, rows) => {
     if (err) {
@@ -52,7 +51,7 @@ app.get("/api/searcharticles", (req, res) => {
     if (!rows || rows.length === 0) {
       return res.status(404).json({ error: "Keine Artikel gefunden" });
     }
-    res.status(500).json(rows);
+    res.status(200).json(rows);
   });
 });
 

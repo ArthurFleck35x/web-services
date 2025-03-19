@@ -1,7 +1,7 @@
 
 <template>
     <div v-if="isPopupVisible" class="popUp">
-        <div>{{ certainProduct.name }}</div>
+        <div>{{ certainProduct.title }}</div>
         <div>{{ certainProduct.description }}</div>
         <button @click="closePupUp()">Close</button>
     </div>
