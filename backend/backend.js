@@ -35,7 +35,6 @@ app.get("/api/myarticles", (req, res) => {
   });
 });
 
-// Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
 app.get("/api/searcharticles", (req, res) => {
   const { searchstring } = req.query; // Suchbegriff aus der Anfrage
 
@@ -43,8 +42,13 @@ app.get("/api/searcharticles", (req, res) => {
     return res.status(400).json({ error: "Suchstring muss angegeben werden" });
   }
 
-  const query =
-    "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
+  // SQL-Abfrage, die die E-Mail des Benutzers zusammen mit den Artikeldaten abruft
+  const query = `
+    SELECT artikel.*, users.email 
+    FROM artikel
+    JOIN user ON artikel.user_id = users.id
+    WHERE artikel.title LIKE ? OR artikel.description LIKE ?
+  `;
 
   db.all(query, [`%${searchstring}%`, `%${searchstring}%`], (err, rows) => {
     if (err) {
@@ -56,7 +60,6 @@ app.get("/api/searcharticles", (req, res) => {
     res.status(200).json(rows);
   });
 });
-
 //ALL_ARTICLES DB
 app.get("/api/articles", (req, res) => {
   const query = "SELECT * FROM artikel";
