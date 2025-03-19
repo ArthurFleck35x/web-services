@@ -1,7 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
-const bcrypt = require('bcrypt');
+
 
 const app = express();
 const dbPath = path.resolve(__dirname, "Marketplace_DB.db");
@@ -182,7 +182,7 @@ app.get("/currency", async (req, res) => {
     return res.status(500).json({
       success: false,
       message:
-        "❌ Fehler beim Abrufen des Wechselkurses. Keine Daten in der Datei.",
+        "Fehler beim Abrufen des Wechselkurses. Keine Daten in der Datei.",
     });
   }
 
