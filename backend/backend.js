@@ -301,6 +301,36 @@ async function setdelArticle(req,res) {
   
 }
 
+app.put('/api/updatearticle', (req, res) => {
+setUpdateArticle(req,res).then(data=>{
+  res.status(200).json(data)
+})
+})
+async function setUpdateArticle(req,res) {
+  try {
+    const response = await fetch(serverURL+"/updatearticle",{
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        "id": product.id,
+        "title": product.title,
+        "description": product.description,
+        "price": product.price,
+        "count": product.count,
+      }),
+    }); // Beispiel-API
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+
+    const data = await response.json(); // JSON-Daten extrahieren
+
+  } catch (error) {
+    console.error('Fehler:', error);
+    return []; // Rückgabe einer leeren Liste im Fehlerfall
+  }
+}
+
+
+  
 
 
 
