@@ -15,7 +15,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 // Middleware zum Parsen von JSON aus requests
 app.use(express.json());
 
-// Route zum Abrufen der Artikel eines bestimmten Nutzers
+// PROFILE DB
 app.get("/api/myarticles", (req, res) => {
   const { userId } = req.query;
 
@@ -34,9 +34,9 @@ app.get("/api/myarticles", (req, res) => {
   });
 });
 
-// Route zum Abrufen eines bestimmten Artikels anhand der Artikel-ID
+// SEARCH DB
 app.get('/api/searcharticles', (req, res) => {
-    const { searchstring } = req.query; // Suchbegriff aus der Anfrage
+    const { searchstring } = req.query; 
     
     if (!searchstring) {
         return res.status(400).json({ error: 'Suchstring muss angegeben werden' });
@@ -54,6 +54,47 @@ app.get('/api/searcharticles', (req, res) => {
         res.status(500).json(rows);
     });
 });
+
+//ALL_ARTICLES DB
+app.get('/api/articles', (req, res) => {
+  const query = "SELECT * FROM artikel";
+
+  db.all(query, [], (err, rows) => {
+      if (err) {
+          return res.status(500).json({ error: 'Fehler beim Abrufen der Artikel' });
+      }
+      if (!rows || rows.length === 0) {
+          return res.status(404).json({ error: 'Keine Artikel gefunden' });
+      }
+      res.status(200).json(rows);
+  });
+});
+
+//ARTIKEL CREATION
+app.post('/api/newarticle', (req, res) => {
+  const { id, user_id, title, description, price, category, count, currency } = req.body;
+
+  if (!id || !user_id || !title || !description || !price || !category || !count || !currency) {
+      return res.status(400).json({ error: 'Alle Felder müssen ausgefüllt sein' });
+  }
+
+  const created_at = new Date().toISOString();
+
+  const query = `
+      INSERT INTO artikel (id, user_id, title, description, price, category, created_at, count, currency) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  db.run(query, [id, user_id, title, description, price, category, created_at, count, currency], function (err) {
+      if (err) {
+          return res.status(500).json({ error: 'Fehler beim Einfügen des Artikels' });
+      }
+      res.status(201).json({ message: 'Artikel erfolgreich hinzugefügt', articleId: this.lastID });
+  });
+});
+
+
+
 
 
 // Server starten
