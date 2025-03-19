@@ -47,12 +47,9 @@ function closePupUp(){
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();
-    /*fetchArticles().then(data => {
+    fetchArticles().then(data => {
         products.value = data;
-    });*/
-    fetchSearchArticles("a").then(data=>{
-      products.value = data;
-    })
+    });
 })
 
 </script>
@@ -100,6 +97,7 @@ onMounted(()=>{
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .popup {
