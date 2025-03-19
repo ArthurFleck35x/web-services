@@ -97,12 +97,10 @@ app.post("/api/newarticle", (req, res) => {
           .status(500)
           .json({ error: "Fehler beim Einfügen des Artikels" });
       }
-      res
-        .status(201)
-        .json({
-          message: "Artikel erfolgreich hinzugefügt",
-          articleId: this.lastID,
-        });
+      res.status(201).json({
+        message: "Artikel erfolgreich hinzugefügt",
+        articleId: this.lastID,
+      });
     }
   );
 });
@@ -119,13 +117,13 @@ const currencyToIso = {
 };
 
 // API-Endpunkt, der den ISO-Code basierend auf der Währung zurückgibt
-app.post("/api/get-flag", (req, res) => {
-  const { currency } = req.body;
+app.get("/api/get-flag", (req, res) => {
+  const { currency } = req.query;
 
   if (!currency || !currencyToIso[currency]) {
     return res
       .status(400)
-      .json({ success: false, message: "Ungültige Währung! " });
+      .json({ success: false, message: "Ungültige Währung!" });
   }
 
   // ISO-Code für die Währung finden
@@ -168,11 +166,11 @@ async function getExchangeRate(targetCurrency) {
   }
 }
 
-app.post("/currency", async (req, res) => {
-  console.log("🔄 Anfrage erhalten:", req.body);
+app.get("/currency", async (req, res) => {
+  console.log("🔄 Anfrage erhalten:", req.query);
 
-  const { targetCurrency, amount } = req.body;
-  if (!targetCurrency || !amount) {
+  const { targetCurrency } = req.query;
+  if (!targetCurrency) {
     return res
       .status(400)
       .json({ success: false, message: "⚠️ Fehlende Parameter!" });
