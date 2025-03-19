@@ -202,7 +202,102 @@ async function getarticles(req, res) {
     return []; // Rückgabe einer leeren Liste im Fehlerfall
   }
 }
+app.get("/api/searcharticles", (req, res) => {
+  getSarticles(req,res).then(data=>{
+res.status(200).json(data.json())
+  })
 
+})
+async function getSarticles(req,res) {
+  try {
+    const response = await fetch(serverURL+"/searcharticles?searchstring=" + encodeURIComponent(searchstring),{
+      method: "GET",
+      headers: {"Content-Type": "application/json"},
+    }); 
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+
+    const data = await response.json(); // JSON-Daten extrahieren
+    return data; // Rückgabe der JSON-Objekte als Liste
+  } catch (error) {
+    console.error('Fehler:', error);
+    return []; // Rückgabe einer leeren Liste im Fehlerfall
+  }
+}
+app.get("/api/myarticles", (req, res) => {
+getMyArticles(req,res).then(data=>{
+  res.status(200).json(data.json())
+})
+})
+async function getMyArticles(req,res) {
+  try {
+    const response = await fetch(serverURL+"/myarticles?userID="+encodeURIComponent(userID),{
+      method: "GET",
+      headers: {"Content-Type": "application/json"},
+    }); // Beispiel-API
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+
+    const data = await response.json(); // JSON-Daten extrahieren
+    return data; // Rückgabe der JSON-Objekte als Liste
+  } catch (error) {
+    console.error('Fehler:', error);
+    return []; // Rückgabe einer leeren Liste im Fehlerfall
+  }
+}
+
+//Article edit
+app.post("/api/newarticle", (req, res) => {
+  setNewArticle(req,res).then(data=>{
+    res.status(200).json(data.json())
+  })
+})
+async function setNewArticle(req,res) {
+  try {
+    const response = await fetch(serverURL+"/newarticle",{
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        "userID": userID,
+        "title": title,
+        "price": price,
+        "count": count,
+        "description": description,
+      }),
+    }); // Beispiel-API
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ' + response.json().error);
+
+    const data = await response.json(); // JSON-Daten extrahieren
+    
+  } catch (error) {
+    console.error('Fehler:', error);
+    return []; // Rückgabe einer leeren Liste im Fehlerfall
+  }
+  
+}
+
+app.delete('/api/deletearticle', (req, res) => {
+ setdelArticle(req,res).then(data=>{
+  res.status(200).json(data.json)
+ })
+})
+async function setdelArticle(req,res) {
+  try {
+    const response = await fetch(serverURL+"/deletearticle",{
+      method: "DELETE",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        "id": id
+      }),
+    }); // Beispiel-API
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+
+    const data = await response.json(); // JSON-Daten extrahieren
+
+  } catch (error) {
+    console.error('Fehler:', error);
+    return []; // Rückgabe einer leeren Liste im Fehlerfall
+  }
+  
+}
 
 
 
