@@ -44,9 +44,9 @@ app.get("/api/searcharticles", (req, res) => {
 
   // SQL-Abfrage, die die E-Mail des Benutzers zusammen mit den Artikeldaten abruft
   const query = `
-    SELECT artikel.*, users.email 
+    SELECT artikel.*, user.email 
     FROM artikel
-    JOIN user ON artikel.user_id = users.id
+    JOIN user ON artikel.user_id = user.user_id
     WHERE artikel.title LIKE ? OR artikel.description LIKE ?
   `;
 

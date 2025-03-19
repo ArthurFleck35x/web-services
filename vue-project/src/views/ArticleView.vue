@@ -15,6 +15,7 @@
             <div class="description-box">
                 <p><strong>Beschreibung:</strong></p>
                 <p>{{ certainProduct.description }}</p>
+                <p>{{ certainProduct.email }}</p>
             </div>
             <button class="close-button" @click="closePupUp()">Close</button>
         </div>
@@ -46,9 +47,12 @@ function closePupUp(){
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();
-    fetchArticles().then(data => {
+    /*fetchArticles().then(data => {
         products.value = data;
-    });
+    });*/
+    fetchSearchArticles("a").then(data=>{
+      products.value = data;
+    })
 })
 
 </script>
