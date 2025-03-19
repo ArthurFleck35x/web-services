@@ -30,7 +30,7 @@ app.get("/api/myarticles", (req, res) => {
       res.status(500).json({ error: "Fehler beim Abrufen der Artikel" });
       return;
     }
-    res.json(rows);
+    res.status(200).json(rows);
   });
 });
 
@@ -73,9 +73,9 @@ app.get("/api/articles", (req, res) => {
 
 //ARTIKEL CREATION
 app.post("/api/newarticle", (req, res) => {
-  const { user_id, title, description, price, count } = req.body;
+  const { userID, title, price, count, description } = req.body;
 
-  if (!user_id || !title || !description || !price || !count) {
+  if (!userID || !title || !description || !price || !count) {
     return res
       .status(400)
       .json({ error: "Alle Pflichtfelder müssen ausgefüllt sein" });
@@ -90,7 +90,7 @@ app.post("/api/newarticle", (req, res) => {
 
   db.run(
     query,
-    [user_id, title, description, price, count, created_at],
+    [userID, title, description, price, count, created_at],
     function (err) {
       if (err) {
         return res
