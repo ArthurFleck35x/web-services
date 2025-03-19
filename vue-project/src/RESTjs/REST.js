@@ -1,6 +1,6 @@
 const serverURL = "/api";
 
-var userID=1;
+var userID;
 
 var currencyRate = 1;
 
@@ -84,15 +84,19 @@ export async function checkLoginData(email,username,password) {
         "password": password
       }),
     }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: '+ response.json().error);
 
     const data = await response.json(); // JSON-Daten extrahieren
     
-    return data;
+    userID = data.userId;
+
+    setLoggedIn(true);
+
+    return true;
 
   } catch (error) {
     console.error('Fehler:', error);
-    return []; // Rückgabe einer leeren Liste im Fehlerfall
+    return false; 
   }
 }
 
@@ -107,15 +111,19 @@ export async function registerUser(email,username,password) {
         "password": password
       }),
     }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ' + response.json().error);
 
     const data = await response.json(); // JSON-Daten extrahieren
     
-    return data;
+    userID = data.userId;
     
+    setLoggedIn(true);
+
+    return true;
+
   } catch (error) {
     console.error('Fehler:', error);
-    return []; // Rückgabe einer leeren Liste im Fehlerfall
+    return false; // Rückgabe einer leeren Liste im Fehlerfall
   }
 }
 
@@ -171,7 +179,7 @@ export async function createNewArticle(title,price,count,description) {
         "description": description,
       }),
     }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ' + response.json().error);
 
     const data = await response.json(); // JSON-Daten extrahieren
     

@@ -1,33 +1,33 @@
 <template>
     <nav class="navbar bg-dark">
-      <!-- Logo -->
-      <div class="logo">
-        <img src="@/assets/logo1.png" alt="Logo" />
-      </div>
-  
-      <!-- Titel -->
-      <h1 class="title">UniPlace</h1>
-  
-      <!-- Menü -->
-      <div class="menu">
-        <button class="menu-button" @click="toggleMenu">
-          ☰
-        </button>
-  
-        <!-- Dropdown -->
-        <div v-show="menuOpen" class="dropdown">
-          <ul>
-            <RouterLink class="router" to="/" ><li @click="closeMenu" class="first">Home</li></RouterLink>
-            <RouterLink class="router" to="/about"><li @click="closeMenu">About</li></RouterLink>
-            <RouterLink class="router" to="/market"><li @click="closeMenu">Market</li></RouterLink>
-            <RouterLink class="router" to="/myarticles"><li @click="closeMenu">My Articles</li></RouterLink>
-            <RouterLink class="router" to="/addarticle"><li @click="closeMenu">Add Article</li></RouterLink>
-            <RouterLink class="router" to="/currency"><li @click="closeMenu" class="last">Currency</li></RouterLink>
-          </ul>
+        <!-- Logo -->
+        <div class="logo">
+            <img src="@/assets/logo1.png" alt="Logo" />
         </div>
-      </div>
+    
+        <!-- Titel -->
+        <h1 class="title">UniPlace</h1>
+    
+        <!-- Menü -->
+        <div class="menu">
+            <button class="menu-button" @click="toggleMenu">
+            ☰
+            </button>
+    
+            <!-- Dropdown -->
+            <div v-show="menuOpen" class="dropdown">
+                <ul>
+                    <RouterLink class="router" to="/"><li @click="logOut" class="first">LogOut</li></RouterLink>
+                    <RouterLink class="router" to="/about"><li @click="closeMenu">About</li></RouterLink>
+                    <RouterLink class="router" to="/market"><li @click="closeMenu">Market</li></RouterLink>
+                    <RouterLink class="router" to="/myarticles"><li @click="closeMenu">My Articles</li></RouterLink>
+                    <RouterLink class="router" to="/addarticle"><li @click="closeMenu">Add Article</li></RouterLink>
+                    <RouterLink class="router" to="/currency"><li @click="closeMenu" class="last">Currency</li></RouterLink>
+                </ul>
+            </div>
+        </div>
     </nav>
-  </template>
+</template>
   
 <script>
     export default {
@@ -42,10 +42,15 @@
             },
             closeMenu() {
                 this.menuOpen = false;
+            },
+            logOut() {
+                setLoggedIn(false);
+                this.closeMenu();
             }
         }
     };
     import { RouterLink } from 'vue-router';
+    import { setLoggedIn } from '@/RESTjs/REST.js';
 </script>
 
 <style scoped>

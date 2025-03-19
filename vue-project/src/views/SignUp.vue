@@ -3,6 +3,10 @@
         <div class="errorMessage">Error</div>
         <div>{{ errormessage }}</div>
     </div>
+    <div class="popup bg-dark" v-if="isSuccessVisible">
+        <div class="successMessage">Success</div>
+        <div>{{ successmessage }}</div>
+    </div>
     <div class="bg-special">
         <div class="right element"> 
             <h1 class="top5">Sign Up</h1>
@@ -109,7 +113,6 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { registerUser } from "@/RESTjs/REST";
 import CryptoJS from "crypto-js";
-import { setLoggedIn } from "@/RESTjs/REST";
 
 const router = useRouter();
 
@@ -130,7 +133,11 @@ const hashedPassword = ref('');
 
 const isPopupVisible = ref(false);
 
+const isSuccessVisible = ref(false);
+
 const errormessage = ref('');
+
+const successmessage = ref('');
 
 const signUp = () => {
   if(!checkValues()){
@@ -166,10 +173,21 @@ function checkValues(){
 }
 
 function sendSignUpData(){
-  //var data = registerUser(email.value,username.value,hashedPassword.value);
-  errormessage.value = "Hallo";
-  openPopup();
-  setLoggedIn(true);
+  registerUser(email.value,username.value,hashedPassword.value).then(success=>{
+    if(success){
+        successmessage.value = "Successfully signed in"
+        isSuccessVisible.value = true;
+  
+        setTimeout(() => {
+            isSuccessVisible.value = false;
+        }, 2000);
+
+        router.push("/market")
+    }else{
+        errormessage.value = "Username or email already exists" 
+        openPopup();
+    }
+  });
 }
 
 function openPopup(){
@@ -346,4 +364,10 @@ h4 {
   border-radius: 10px;
   z-index: 400;
 }
+
+.successMessage{
+    color: lightgreen;
+    text-align: center;
+}
+
 </style>

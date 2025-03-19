@@ -71,9 +71,15 @@ function getDetails(product){
 }
 
 const toggleEditMode = () => {
-    if(isEditing){
+    if(isEditing.value){
         if(certainProduct.count>0){
-            //updateArticle(certainProduct);
+            updateArticle(certainProduct);
+            
+            // Produkt in der Liste aktualisieren
+            const index = products.value.findIndex(p => p.id === certainProduct.id);
+            if (index !== -1) {
+                products.value[index] = { ...certainProduct }; 
+            }
         }else{
             deleteProduct(certainProduct.id);
         }
@@ -83,7 +89,7 @@ const toggleEditMode = () => {
 
 const deleteProduct = (id) => {
     products.value = products.value.filter(product => product.id !== id);
-    //deleteArticle(id);
+    deleteArticle(id);
     closePopup();
 };
 
@@ -99,7 +105,6 @@ function initialiseProducts(){
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();
-    //products.value = fetchArticles();
     initialiseProducts();
 
     if(products.value.length<1){

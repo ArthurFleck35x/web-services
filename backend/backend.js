@@ -167,7 +167,7 @@ async function getExchangeRate(targetCurrency) {
   }
 }
 
-app.get("/currency", async (req, res) => {
+app.get("/api/currency", async (req, res) => {
   console.log("🔄 Anfrage erhalten:", req.query);
 
   const { targetCurrency } = req.query;
@@ -205,7 +205,7 @@ app.post('/api/login', (req, res) => {
       return res.status(400).json({ error: 'Email, Benutzername und Passwort erforderlich' });
   }
 
-  const query = `SELECT * FROM users WHERE email = ? AND username = ?`;
+  const query = `SELECT * FROM user WHERE email = ? AND username = ?`;
 
   db.get(query, [email, username], (err, user) => {
       if (err) {
@@ -215,22 +215,16 @@ app.post('/api/login', (req, res) => {
           return res.status(401).json({ error: 'Ungültige Anmeldedaten' });
       }
 
-      // Passwort-Hash vergleichen
-      bcrypt.compare(password, user.password, (err, isMatch) => {
-          if (err) {
-              return res.status(500).json({ error: 'Fehler bei der Passwortüberprüfung' });
-          }
-          if (!isMatch) {
-              return res.status(401).json({ error: 'Ungültige Anmeldedaten' });
-          }
-
-          res.status(200).json({ message: 'Login erfolgreich', userId: user.id });
-      });
+      if(password==user.password){
+        res.status(200).json({ message: 'Login erfolgreich', userId: user.user_id });
+      }else{
+        return res.status(401).json({ error: 'Ungültige Anmeldedaten' });
+      }
   });
 });
 
 //ITEM DELEITION
-app.delete('/api/article', (req, res) => {
+app.delete('/api/deletearticle', (req, res) => {
   const { id } = req.body; // Artikel-ID aus dem Body extrahieren
 
   if (!id) {
@@ -252,7 +246,7 @@ app.delete('/api/article', (req, res) => {
 });
 
 //update ITEM
-app.put('/api/article', (req, res) => {
+app.put('/api/updatearticle', (req, res) => {
   const { id, title, description, price, count } = req.body;
 
   if (!id || !title || !description || !price || !count) {
@@ -290,17 +284,17 @@ app.post('/api/register', (req, res) => {
   }
 
   // Überprüfen, ob die E-Mail bereits existiert
-  const checkQuery = 'SELECT * FROM users WHERE email = ?';
-  db.get(checkQuery, [email], (err, row) => {
+  const checkQuery = 'SELECT * FROM user WHERE email = ? OR username = ?';
+  db.get(checkQuery, [email,username], (err, row) => {
       if (err) {
-          return res.status(500).json({ error: 'Fehler beim Überprüfen der E-Mail' });
+          return res.status(500).json({ error: 'Fehler beim Überprüfen der E-Mail und des Benutzernamen' });
       }
       if (row) {
-          return res.status(400).json({ error: 'E-Mail ist bereits registriert' });
+          return res.status(400).json({ error: 'E-Mail/Benutzername ist bereits registriert' });
       }
 
       // Neuen Benutzer in die Datenbank einfügen (Passwort ist bereits gehasht)
-      const insertQuery = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+      const insertQuery = 'INSERT INTO user (username, email, password) VALUES (?, ?, ?)';
       db.run(insertQuery, [username, email, password], function (err) {
           if (err) {
               return res.status(500).json({ error: 'Fehler beim Registrieren des Benutzers' });

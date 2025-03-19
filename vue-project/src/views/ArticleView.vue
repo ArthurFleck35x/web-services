@@ -49,9 +49,6 @@ onMounted(()=>{
     fetchArticles().then(data => {
         products.value = data;
     });
-    /*fetchSearchArticles("a").then(data=>{
-        products.value = data;
-    });*/
 })
 
 </script>

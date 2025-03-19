@@ -3,6 +3,10 @@
     <div class="errorMessage">Error</div>
     <div>{{ errormessage }}</div>
   </div>
+  <div class="popup bg-dark" v-if="isSuccessVisible">
+      <div class="successMessage">Success</div>
+      <div>{{ successmessage }}</div>
+  </div>
   <div class="bg-special">
     <div class="right element">
       <h1 class="top5">Log In</h1>
@@ -134,7 +138,7 @@
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import CryptoJS from "crypto-js";
-import { checkLoginData, setLoggedIn } from "@/RESTjs/REST";
+import { checkLoginData } from "@/RESTjs/REST";
 
 const router = useRouter();
 
@@ -155,7 +159,11 @@ const hashedPassword = ref('');
 
 const isPopupVisible = ref(false);
 
+const isSuccessVisible = ref(false);
+
 const errormessage = ref('');
+
+const successmessage = ref('');
 
 const Login = () => {
   if(!checkValues()){
@@ -191,10 +199,21 @@ function checkValues(){
 }
 
 function sendLoginData(){
-  //var data = checkLoginData(email.value,username.value,hashedPassword.value);
-  errormessage.value = "Hallo";
-  openPopup();
-  setLoggedIn(true);
+  checkLoginData(email.value,username.value,hashedPassword.value).then(success => {
+    if(success){
+      successmessage.value = "Login successfull"
+      isSuccessVisible.value = true;
+  
+      setTimeout(() => {
+        isSuccessVisible.value = false;
+      }, 2000);
+
+      router.push("/market")
+    }else{
+      errormessage.value = "User and/or Password wrong";
+      openPopup();
+    }
+  });
 }
 
 function openPopup(){
@@ -399,4 +418,10 @@ h4 {
   border-radius: 10px;
   z-index: 400;
 }
+
+.successMessage{
+    color: lightgreen;
+    text-align: center;
+}
+
 </style>
