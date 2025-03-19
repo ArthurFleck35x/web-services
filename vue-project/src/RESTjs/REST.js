@@ -222,3 +222,4 @@ export async function deleteArticle(id) {
     return []; // Rückgabe einer leeren Liste im Fehlerfall
   }
 }
+

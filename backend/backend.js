@@ -1,6 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const bcrypt = require('bcrypt');
 
 const app = express();
 const dbPath = path.resolve(__dirname, "Marketplace_DB.db");
@@ -195,6 +196,120 @@ app.get("/currency", async (req, res) => {
     currencySymbol,
   });
 });
+
+//LOGIN
+app.post('/api/login', (req, res) => {
+  const { email, username, password } = req.body; // Daten aus dem Body extrahieren
+
+  if (!email || !username || !password) {
+      return res.status(400).json({ error: 'Email, Benutzername und Passwort erforderlich' });
+  }
+
+  const query = `SELECT * FROM users WHERE email = ? AND username = ?`;
+
+  db.get(query, [email, username], (err, user) => {
+      if (err) {
+          return res.status(500).json({ error: 'Fehler beim Abrufen der Benutzerdaten' });
+      }
+      if (!user) {
+          return res.status(401).json({ error: 'Ungültige Anmeldedaten' });
+      }
+
+      // Passwort-Hash vergleichen
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) {
+              return res.status(500).json({ error: 'Fehler bei der Passwortüberprüfung' });
+          }
+          if (!isMatch) {
+              return res.status(401).json({ error: 'Ungültige Anmeldedaten' });
+          }
+
+          res.status(200).json({ message: 'Login erfolgreich', userId: user.id });
+      });
+  });
+});
+
+//ITEM DELEITION
+app.delete('/api/article', (req, res) => {
+  const { id } = req.body; // Artikel-ID aus dem Body extrahieren
+
+  if (!id) {
+      return res.status(400).json({ error: 'Artikel-ID erforderlich' });
+  }
+
+  const query = `DELETE FROM artikel WHERE id = ?`;
+
+  db.run(query, [id], function (err) {
+      if (err) {
+          return res.status(500).json({ error: 'Fehler beim Löschen des Artikels' });
+      }
+      if (this.changes === 0) {
+          return res.status(404).json({ error: 'Artikel nicht gefunden' });
+      }
+
+      res.status(200).json({ message: 'Artikel erfolgreich gelöscht' });
+  });
+});
+
+//update ITEM
+app.put('/api/article', (req, res) => {
+  const { id, title, description, price, count } = req.body;
+
+  if (!id || !title || !description || !price || !count) {
+      return res.status(400).json({ error: 'Alle Felder müssen ausgefüllt sein' });
+  }
+
+  const query = `
+      UPDATE artikel 
+      SET title = ?, description = ?, price = ?, count = ?, created_at = ?
+      WHERE id = ?
+  `;
+
+  const created_at = new Date().toISOString(); // Neuen Zeitstempel setzen
+
+  db.run(query, [title, description, price, count, created_at, id], function (err) {
+      if (err) {
+          return res.status(500).json({ error: 'Fehler beim Aktualisieren des Artikels' });
+      }
+      if (this.changes === 0) {
+          return res.status(404).json({ error: 'Artikel nicht gefunden' });
+      }
+
+      res.status(200).json({ message: 'Artikel erfolgreich aktualisiert' });
+  });
+});
+
+
+//REGISTER USER
+app.post('/api/register', (req, res) => {
+  const { username, email, password } = req.body;
+
+  // Überprüfen, ob alle Felder vorhanden sind
+  if (!username || !email || !password) {
+      return res.status(400).json({ error: 'Benutzername, E-Mail und Passwort sind erforderlich' });
+  }
+
+  // Überprüfen, ob die E-Mail bereits existiert
+  const checkQuery = 'SELECT * FROM users WHERE email = ?';
+  db.get(checkQuery, [email], (err, row) => {
+      if (err) {
+          return res.status(500).json({ error: 'Fehler beim Überprüfen der E-Mail' });
+      }
+      if (row) {
+          return res.status(400).json({ error: 'E-Mail ist bereits registriert' });
+      }
+
+      // Neuen Benutzer in die Datenbank einfügen (Passwort ist bereits gehasht)
+      const insertQuery = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+      db.run(insertQuery, [username, email, password], function (err) {
+          if (err) {
+              return res.status(500).json({ error: 'Fehler beim Registrieren des Benutzers' });
+          }
+          res.status(201).json({ message: 'Benutzer erfolgreich registriert', userId: this.lastID });
+      });
+  });
+});
+
 
 // Server starten
 const PORT = process.env.PORT || 3000;
