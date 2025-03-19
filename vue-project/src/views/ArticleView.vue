@@ -23,8 +23,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watchEffect  } from 'vue';
 import { getCurrencyRate,fetchArticles,fetchSearchArticles } from '@/RESTjs/REST';
+import { eventBus } from '@/eventBus';
 
 var certainProduct;
 
@@ -43,7 +44,14 @@ function closePupUp(){
     isPopupVisible.value = false;
 }
 
+const fetchData = async (searchTerm = '') => {
+    products.value = await fetchSearchArticles(searchTerm);
+};
 
+// Immer neu laden, wenn sich `eventBus.searchTerm` ändert
+watchEffect(() => {
+    fetchData(eventBus.searchTerm);
+});
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();

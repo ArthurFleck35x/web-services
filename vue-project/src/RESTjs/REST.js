@@ -4,7 +4,7 @@ var userID;
 
 var currencyRate = 1;
 
-var loggedIn = false;
+var loggedIn = true;
 
 var flagURL = "";
 
@@ -34,6 +34,7 @@ export async function fetchArticles() {
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren
+      console.log(data)
       return data; // Rückgabe der JSON-Objekte als Liste
     } catch (error) {
       console.error('Fehler:', error);

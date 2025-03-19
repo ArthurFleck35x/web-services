@@ -1,5 +1,6 @@
 <script setup>
     import { ref, onMounted, onUnmounted } from 'vue';
+    import { eventBus } from '@/eventBus';
 
     const isSticky = ref(false);
 
@@ -15,12 +16,20 @@
     onUnmounted(() => {
         window.removeEventListener('scroll', handleScroll);
     });
+
+    
+    const searchQuery = ref('');
+
+    const search = () => {
+        eventBus.setSearchTerm(searchQuery.value);
+    };
+    
 </script>
 
 <template>
     <div class="background">
         <div :class="['search-container', { sticky: isSticky }]">
-            <input type="text" placeholder="Suche..." class="search-input" />
+            <input type="text" placeholder="Suche..." class="search-input" v-model="searchQuery" @input="search"/>
         </div>
     </div>
 </template>
