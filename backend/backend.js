@@ -67,7 +67,12 @@ app.get("/api/searcharticles", (req, res) => {
 });
 //ALL_ARTICLES DB
 app.get("/api/articles", (req, res) => {
-  const query = "SELECT * FROM artikel";
+  
+  const query = `
+    SELECT artikel.*, user.email
+    FROM artikel
+    JOIN user ON artikel.user_id = user.user_id
+  `;
 
   db.all(query, [], (err, rows) => {
     if (err) {
