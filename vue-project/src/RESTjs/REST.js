@@ -8,6 +8,10 @@ var loggedIn = false;
 
 var flagURL = "";
 
+var myCurrency = "eur"
+
+var myCurrencySymbol = "€"
+
 export function isLoggedIn(){
   return loggedIn;
 }
@@ -20,9 +24,13 @@ export function getCurrencyRate(){
   return currencyRate;
 }
 
+export function getCurrencySymbol(){
+  return myCurrencySymbol;
+}
+
 export async function fetchArticles() {
     try {
-      const response = await fetch(serverURL+"/articles"); // Beispiel-API
+      const response = await fetch(serverURL+"/articles"); 
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren
@@ -38,7 +46,7 @@ export async function fetchSearchArticles(searchstring) {
       const response = await fetch(serverURL+"/searcharticles?searchstring=" + encodeURIComponent(searchstring),{
         method: "GET",
         headers: {"Content-Type": "application/json"},
-      }); // Beispiel-API
+      }); 
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren
@@ -121,23 +129,29 @@ export async function fetchCurrencyRate(currency) {
 
     const data = await response.json(); // JSON-Daten extrahieren
 
+    myCurrency = currency;
+
+    currencyRate = data.rate;
+
+    myCurrencySymbol = data.currencySymbol;
+
   } catch (error) {
     console.error('Fehler:', error);
     return []; // Rückgabe einer leeren Liste im Fehlerfall
   }
 }
 
-export async function fetchFlagURL(country) {
+export async function fetchFlagURL() {
   try {
-    const response = await fetch(serverURL+"/flag?country="+encodeURIComponent(country),{
+    const response = await fetch(serverURL+"/get-flag?currency="+encodeURIComponent(myCurrency),{
       method: "GET",
       headers: {"Content-Type": "application/json"},
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
 
     const data = await response.json(); // JSON-Daten extrahieren
-        flagURL = data.flagURL;
-        return flagURL;
+    flagURL = data.flagUrl;
+    return flagURL;
   } catch (error) {
     console.error('Fehler:', error);
     return []; // Rückgabe einer leeren Liste im Fehlerfall
@@ -150,11 +164,11 @@ export async function createNewArticle(title,price,count,description) {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
+        "userID": userID,
         "title": title,
         "price": price,
         "count": count,
         "description": description,
-        "userID": userID,
       }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');

@@ -73,7 +73,7 @@ function getDetails(product){
 const toggleEditMode = () => {
     if(isEditing){
         if(certainProduct.count>0){
-            updateArticle(certainProduct);
+            //updateArticle(certainProduct);
         }else{
             deleteProduct(certainProduct.id);
         }
@@ -83,7 +83,7 @@ const toggleEditMode = () => {
 
 const deleteProduct = (id) => {
     products.value = products.value.filter(product => product.id !== id);
-    deleteArticle(id);
+    //deleteArticle(id);
     closePopup();
 };
 

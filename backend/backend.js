@@ -30,7 +30,7 @@ app.get("/api/myarticles", (req, res) => {
       res.status(500).json({ error: "Fehler beim Abrufen der Artikel" });
       return;
     }
-    res.json(rows);
+    res.status(200).json(rows);
   });
 });
 
@@ -42,7 +42,8 @@ app.get("/api/searcharticles", (req, res) => {
     return res.status(400).json({ error: "Suchstring muss angegeben werden" });
   }
 
-  const query = "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
+  const query =
+    "SELECT * FROM artikel WHERE title LIKE ? OR description LIKE ?";
 
   db.all(query, [`%${searchstring}%`, `%${searchstring}%`], (err, rows) => {
     if (err) {
@@ -56,26 +57,28 @@ app.get("/api/searcharticles", (req, res) => {
 });
 
 //ALL_ARTICLES DB
-app.get('/api/articles', (req, res) => {
+app.get("/api/articles", (req, res) => {
   const query = "SELECT * FROM artikel";
 
   db.all(query, [], (err, rows) => {
-      if (err) {
-          return res.status(500).json({ error: 'Fehler beim Abrufen der Artikel' });
-      }
-      if (!rows || rows.length === 0) {
-          return res.status(404).json({ error: 'Keine Artikel gefunden' });
-      }
-      res.status(200).json(rows);
+    if (err) {
+      return res.status(500).json({ error: "Fehler beim Abrufen der Artikel" });
+    }
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ error: "Keine Artikel gefunden" });
+    }
+    res.status(200).json(rows);
   });
 });
 
 //ARTIKEL CREATION
-app.post('/api/newarticle', (req, res) => {
-  const { user_id, title, description, price, count } = req.body;
+app.post("/api/newarticle", (req, res) => {
+  const { userID, title, price, count, description } = req.body;
 
-  if (!user_id || !title || !description || !price || !count) {
-      return res.status(400).json({ error: 'Alle Pflichtfelder müssen ausgefüllt sein' });
+  if (!userID || !title || !description || !price || !count) {
+    return res
+      .status(400)
+      .json({ error: "Alle Pflichtfelder müssen ausgefüllt sein" });
   }
 
   const created_at = new Date().toISOString();
@@ -85,17 +88,22 @@ app.post('/api/newarticle', (req, res) => {
       VALUES (?, ?, ?, ?, ?, ?)
       `;
 
-  db.run(query, [user_id, title, description, price, count, created_at], function (err) {
+  db.run(
+    query,
+    [userID, title, description, price, count, created_at],
+    function (err) {
       if (err) {
-          return res.status(500).json({ error: 'Fehler beim Einfügen des Artikels' });
+        return res
+          .status(500)
+          .json({ error: "Fehler beim Einfügen des Artikels" });
       }
-      res.status(201).json({ message: 'Artikel erfolgreich hinzugefügt', articleId: this.lastID });
-  });
+      res.status(201).json({
+        message: "Artikel erfolgreich hinzugefügt",
+        articleId: this.lastID,
+      });
+    }
+  );
 });
-
-
-
-
 
 // Route für Flagge von Währung
 const currencyToIso = {
@@ -109,20 +117,83 @@ const currencyToIso = {
 };
 
 // API-Endpunkt, der den ISO-Code basierend auf der Währung zurückgibt
-app.post("/get-flag", (req, res) => {
-  const { currency } = req.body;
+app.get("/api/get-flag", (req, res) => {
+  const { currency } = req.query;
 
   if (!currency || !currencyToIso[currency]) {
     return res
       .status(400)
-      .json({ success: false, message: "Ungültige Währung! " });
+      .json({ success: false, message: "Ungültige Währung!" });
   }
 
   // ISO-Code für die Währung finden
   const isoCode = currencyToIso[currency];
   const flagUrl = `https://flagcdn.com/w320/${isoCode}.png`;
 
-  res.json({ success: true, isoCode, flagUrl });
+  res.status(200).json({ success: true, isoCode, flagUrl });
+});
+
+//Route um Währung umzurechnen
+const FILE_PATH = path.join(__dirname, "exchange_rates.json");
+
+const currencySymbols = {
+  eur: "€",
+  usd: "$",
+  gbp: "£",
+  jpy: "¥",
+  krw: "₩",
+  cny: "¥",
+  mxn: "MX$",
+};
+
+async function getExchangeRate(targetCurrency) {
+  const baseCurrency = "eur"; // Setze die Base-Währung immer auf "eur"
+
+  try {
+    console.log("Lese Wechselkurse aus der lokalen Datei.");
+    const data = JSON.parse(fs.readFileSync(FILE_PATH, "utf-8"));
+
+    if (!data[baseCurrency] || !data[baseCurrency][targetCurrency]) {
+      throw new Error(
+        `Wechselkurs für ${baseCurrency} -> ${targetCurrency} nicht gefunden.`
+      );
+    }
+
+    return data[baseCurrency][targetCurrency];
+  } catch (error) {
+    console.error("Fehler in getExchangeRate:", error);
+    return null;
+  }
+}
+
+app.get("/currency", async (req, res) => {
+  console.log("🔄 Anfrage erhalten:", req.query);
+
+  const { targetCurrency } = req.query;
+  if (!targetCurrency) {
+    return res
+      .status(400)
+      .json({ success: false, message: "⚠️ Fehlende Parameter!" });
+  }
+
+  const rate = await getExchangeRate(targetCurrency);
+  if (rate === null) {
+    return res.status(500).json({
+      success: false,
+      message:
+        "❌ Fehler beim Abrufen des Wechselkurses. Keine Daten in der Datei.",
+    });
+  }
+
+  const currencySymbol =
+    currencySymbols[targetCurrency.toLowerCase()] ||
+    targetCurrency.toUpperCase();
+
+  res.status(200).json({
+    success: true,
+    rate,
+    currencySymbol,
+  });
 });
 
 // Server starten
