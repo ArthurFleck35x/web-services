@@ -30,7 +30,7 @@ app.get("/api/myarticles", (req, res) => {
       res.status(500).json({ error: "Fehler beim Abrufen der Artikel" });
       return;
     }
-    res.json(rows);
+    res.status(200).json(rows);
   });
 });
 
