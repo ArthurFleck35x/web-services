@@ -3,7 +3,7 @@
     <div class="bg-special" :class="{'too-few-products': tooFewProducts.value}">
         <div class="product-item" v-for="product in products">
             <p class="product-field"><strong>Produkt:</strong> {{ product.title }}</p>
-            <p class="product-field"><strong>Preis:</strong> {{ product.price * currencyRate}}€</p>
+            <p class="product-field"><strong>Preis:</strong> {{ (product.price * currencyRate).toFixed(2) }} {{ currencySymbol }}</p>
             <p class="product-field"><strong>Anzahl:</strong> {{ product.count }}</p>
             <button class="detailButton" @click="getDetails(product)">Details</button>
         </div>
@@ -33,7 +33,7 @@
             <!-- Anzeige-Modus -->
             <div v-else>
                 <p><strong>Produkt:</strong> {{ certainProduct.title }}</p>
-                <p><strong>Preis:</strong> {{ certainProduct.price * currencyRate }}€</p>
+                <p><strong>Preis:</strong> {{ (certainProduct.price * currencyRate).toFixed(2)}} {{ currencySymbol }}</p>
                 <p><strong>Anzahl:</strong> {{ certainProduct.count }}</p>
                 <div class="description-box">
                 <p><strong>Beschreibung:</strong></p>
@@ -54,11 +54,13 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { getCurrencyRate,fetchMyArticles,deleteArticle,updateArticle } from '@/RESTjs/REST';
+import { getCurrencyRate,fetchMyArticles,deleteArticle,updateArticle, getCurrencySymbol } from '@/RESTjs/REST';
 
 var certainProduct;
 
 var currencyRate;
+
+var currencySymbol;
 
 const isEditing = ref(false);
 
@@ -109,6 +111,7 @@ function initialiseProducts(){
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();
+    currencySymbol = getCurrencySymbol();
     initialiseProducts();
 
     if(products.value.length<1){

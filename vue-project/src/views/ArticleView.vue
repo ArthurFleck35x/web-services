@@ -3,7 +3,7 @@
     <div class="bg-special">
         <div class="product-item" v-for="product in products">
             <p class="product-field"><strong>Produkt:</strong> {{ product.title }}</p>
-            <p class="product-field"><strong>Preis:</strong> {{ product.price * currencyRate}}€</p>
+            <p class="product-field"><strong>Preis:</strong> {{ (product.price * currencyRate).toFixed(2) }} {{currencySymbol}}</p>
             <p class="product-field"><strong>Anzahl:</strong> {{ product.count }}</p>
             <button class="detailButton" @click="getDetails(product)">Details</button>
         </div>
@@ -24,12 +24,14 @@
 
 <script setup>
 import { onMounted, ref, watchEffect  } from 'vue';
-import { getCurrencyRate,fetchArticles,fetchSearchArticles } from '@/RESTjs/REST';
+import { getCurrencyRate,fetchArticles,fetchSearchArticles, getCurrencySymbol } from '@/RESTjs/REST';
 import { eventBus } from '@/eventBus';
 
 var certainProduct;
 
 var currencyRate;
+
+var currencySymbol;
 
 var isPopupVisible = ref(false);
 
@@ -45,7 +47,11 @@ function closePupUp(){
 }
 
 const fetchData = async (searchTerm = '') => {
+  if(searchTerm==""){
+    products.value = await fetchArticles();
+  }else{
     products.value = await fetchSearchArticles(searchTerm);
+  }
 };
 
 // Immer neu laden, wenn sich `eventBus.searchTerm` ändert
@@ -55,6 +61,7 @@ watchEffect(() => {
 
 onMounted(()=>{
     currencyRate = getCurrencyRate();
+    currencySymbol = getCurrencySymbol();
     fetchArticles().then(data => {
         products.value = data;
     });

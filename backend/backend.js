@@ -1,6 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const fs = require("fs");
 
 const serverURL = "http://localhost:3001"
 const app = express();
@@ -15,11 +16,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 // Middleware zum Parsen von JSON aus requests
 app.use(express.json());
-
-
-
-
-
 
 // Route für Flagge von Währung
 const currencyToIso = {
@@ -85,14 +81,14 @@ async function getExchangeRate(targetCurrency) {
 app.get("/api/currency", async (req, res) => {
   console.log("🔄 Anfrage erhalten:", req.query);
 
-  const { targetCurrency } = req.query;
-  if (!targetCurrency) {
+  const { currency } = req.query;
+  if (!currency) {
     return res
       .status(400)
       .json({ success: false, message: "⚠️ Fehlende Parameter!" });
   }
 
-  const rate = await getExchangeRate(targetCurrency);
+  const rate = await getExchangeRate(currency);
   if (rate === null) {
     return res.status(500).json({
       success: false,
@@ -102,8 +98,8 @@ app.get("/api/currency", async (req, res) => {
   }
 
   const currencySymbol =
-    currencySymbols[targetCurrency.toLowerCase()] ||
-    targetCurrency.toUpperCase();
+    currencySymbols[currency.toLowerCase()] ||
+    currency.toUpperCase();
 
   res.status(200).json({
     success: true,
@@ -113,227 +109,208 @@ app.get("/api/currency", async (req, res) => {
 });
 
 
-
-
-//USERS
-app.get("/api/login",(req,res)=>{
-  getlogin(req,res).then(data=>{
-    res.status(200).json(data)
-  })
-})
-async function getlogin(req,res) {
+app.post("/api/login", async (req, res) => {
   try {
-    const response = await fetch(serverURL+"/login",{
+    console.log("🔁 Weiterleitung an 3001: Login-Versuch", req.body);
+
+    const response = await fetch(serverURL+"/login", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        "email": email,
-        "username": username,
-        "password": password
-      }),
-    }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: '+ response.json().error);
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req.body),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json(errorData);
+    }
 
     const data = await response.json();
-    
-    userID = data.userId;
-
-    setLoggedIn(true);
-
-    return true;
-
+    console.log("✅ Login erfolgreich:", data);
+    res.status(200).json(data);
   } catch (error) {
-    console.error('Fehler:', error);
-    return false; 
+    console.error("❌ Fehler beim Weiterleiten:", error);
+    return res.status(500).json({ error: "Interner Serverfehler" });
   }
-}
-app.post('/api/register', (req, res) =>{
-setRegister(req,res).then(data=>{
-  setRegister(req,res).then(data=>{
-    res.status(200).json(data)
-  })
-})
+});
 
 
-})
-
-async function setRegister(req,res) {
+app.post("/api/register", async (req, res) => {
   try {
-    const response = await fetch(serverURL+"/register",{
+    console.log("🔁 Weiterleitung an 3001: Registrierung", req.body);
+
+    const response = await fetch(serverURL+"/register", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        "email": email,
-        "username": username,
-        "password": password
-      }),
-    }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ' + response.json().error);
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req.body),
+    });
 
-    const data = await response.json(); // JSON-Daten extrahieren
-    
-    userID = data.userId;
-    
-    setLoggedIn(true);
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json(errorData);
+    }
 
-    return true;
-
+    const data = await response.json();
+    console.log("✅ Registrierung erfolgreich:", data);
+    res.status(201).json(data);
   } catch (error) {
-    console.error('Fehler:', error);
-    return false; // Rückgabe einer leeren Liste im Fehlerfall
+    console.error("❌ Fehler beim Weiterleiten:", error);
+    return res.status(500).json({ error: "Interner Serverfehler" });
   }
-}
+});
 
 //ARTSEARCH
-app.get("/api/articles", (req, res) => {
-  getarticles(req, res).then(data=>{
+app.get("/api/articles", async (req, res) => {
+  try {
+    const response = await fetch(serverURL+"/articles");
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json(errorData);
+    }
+
+    const data = await response.json();
+    console.log(`✅ Antwort von 3001 erhalten: ${data.length} Artikel gefunden.`);
+    res.status(201).json(data);
+  } catch (error) {
+    console.error("❌ Fehler beim Weiterleiten:", error);
+    return res.status(500).json({ error: "Interner Serverfehler" });
+  }
+});
+
+app.get("/api/searcharticles", async (req, res) => {
+  const { searchstring } = req.query;
+
+  if (!searchstring) {
+    return res.status(400).json({ error: "Suchstring muss angegeben werden" });
+  }
+
+  try {
+    console.log("🔁 Forwarding request to 3001: searchstring =", searchstring);
+
+    const response = await fetch(serverURL+`/searcharticles?searchstring=${encodeURIComponent(searchstring)}`);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json(errorData);
+    }
+
+    const data = await response.json();
+    console.log("✅ Antwort von 3001 erhalten:", data.length, "Artikel gefunden");
     res.status(200).json(data);
-  })
-})
-
-async function getarticles(req, res) {
-  try {
-    const response = await fetch(serverURL+"/articles"); 
-    
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ');
-
-    const data = await response.json(); // JSON-Daten extrahieren
-    return data; // Rückgabe der JSON-Objekte als Liste
   } catch (error) {
-    console.error('Fehler:', error);
-    return []; // Rückgabe einer leeren Liste im Fehlerfall
+    console.error("❌ Fehler beim Weiterleiten:", error);
+    return res.status(500).json({ error: "Interner Serverfehler" });
   }
-}
-app.get("/api/searcharticles", (req, res) => {
-  getSarticles(req,res).then(data=>{
-res.status(200).json(data)
-  })
+});
 
-})
-async function getSarticles(req,res) {
+app.get("/api/myarticles", async (req, res) => {
+  const { userID } = req.query;
+
+  if (!userID) {
+    return res.status(400).json({ error: "userID muss angegeben werden" });
+  }
+
   try {
-    const response = await fetch(serverURL+"/searcharticles?searchstring=" + encodeURIComponent(searchstring),{
-      method: "GET",
-      headers: {"Content-Type": "application/json"},
-    }); 
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+    console.log("🔁 Weiterleitung an 3001: userID =", userID);
 
-    const data = await response.json(); // JSON-Daten extrahieren
-    return data; // Rückgabe der JSON-Objekte als Liste
-  } catch (error) {
-    console.error('Fehler:', error);
-    return []; // Rückgabe einer leeren Liste im Fehlerfall
-  }
-}
-app.get("/api/myarticles", (req, res) => {
-getMyArticles(req,res).then(data=>{
-  res.status(200).json(data)
-})
-})
-async function getMyArticles(req,res) {
-  try {
-    const response = await fetch(serverURL+"/myarticles?userID="+encodeURIComponent(userID),{
-      method: "GET",
-      headers: {"Content-Type": "application/json"},
-    }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+    const response = await fetch(serverURL+`/myarticles?userID=${encodeURIComponent(userID)}`);
 
-    const data = await response.json(); // JSON-Daten extrahieren
-    return data; // Rückgabe der JSON-Objekte als Liste
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json(errorData);
+    }
+
+    const data = await response.json();
+    console.log(`✅ Antwort von 3001 erhalten: ${data.length} Artikel gefunden.`);
+    res.status(200).json(data);
   } catch (error) {
-    console.error('Fehler:', error);
-    return []; // Rückgabe einer leeren Liste im Fehlerfall
+    console.error("❌ Fehler beim Weiterleiten:", error);
+    return res.status(500).json({ error: "Interner Serverfehler" });
   }
-}
+});
 
 //Article edit
-app.post("/api/newarticle", (req, res) => {
-  setNewArticle(req,res).then(data=>{
-    res.status(200).json(data)
-  })
-})
-async function setNewArticle(req,res) {
+app.post("/api/newarticle", async (req, res) => {
   try {
-    const response = await fetch(serverURL+"/newarticle",{
+    console.log("🔁 Weiterleitung an 3001: Artikel wird erstellt", req.body);
+
+    const response = await fetch(serverURL+"/newarticle", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        "userID": userID,
-        "title": title,
-        "price": price,
-        "count": count,
-        "description": description,
-      }),
-    }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ' + response.json().error);
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req.body),
+    });
 
-    const data = await response.json(); // JSON-Daten extrahieren
-    
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json(errorData);
+    }
+
+    const data = await response.json();
+    console.log("✅ Artikel erfolgreich erstellt:", data);
+    res.status(201).json(data);
   } catch (error) {
-    console.error('Fehler:', error);
-    return []; // Rückgabe einer leeren Liste im Fehlerfall
+    console.error("❌ Fehler beim Weiterleiten:", error);
+    return res.status(500).json({ error: "Interner Serverfehler" });
   }
-  
-}
+});
 
-app.delete('/api/deletearticle', (req, res) => {
- setdelArticle(req,res).then(data=>{
-  res.status(200).json(data)
- })
-})
-async function setdelArticle(req,res) {
+app.delete("/api/deletearticle", async (req, res) => {
   try {
-    const response = await fetch(serverURL+"/deletearticle",{
+    console.log("🔁 Weiterleitung an 3001: Artikel wird gelöscht", req.body);
+
+    const response = await fetch(serverURL+"/deletearticle", {
       method: "DELETE",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        "id": id
-      }),
-    }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req.body),
+    });
 
-    const data = await response.json(); // JSON-Daten extrahieren
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json(errorData);
+    }
 
+    const data = await response.json();
+    console.log("✅ Artikel erfolgreich gelöscht:", data);
+    res.status(200).json(data);
   } catch (error) {
-    console.error('Fehler:', error);
-    return []; // Rückgabe einer leeren Liste im Fehlerfall
+    console.error("❌ Fehler beim Weiterleiten:", error);
+    return res.status(500).json({ error: "Interner Serverfehler" });
   }
-  
-}
+});
 
-app.put('/api/updatearticle', (req, res) => {
-setUpdateArticle(req,res).then(data=>{
-  res.status(200).json(data)
-})
-})
-async function setUpdateArticle(req,res) {
+app.put("/api/updatearticle", async (req, res) => {
   try {
-    const response = await fetch(serverURL+"/updatearticle",{
+    console.log("🔁 Weiterleitung an 3001: Artikel wird aktualisiert", req.body);
+
+    const response = await fetch(serverURL+"/updatearticle", {
       method: "PUT",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        "id": product.id,
-        "title": product.title,
-        "description": product.description,
-        "price": product.price,
-        "count": product.count,
-      }),
-    }); // Beispiel-API
-    if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req.body),
+    });
 
-    const data = await response.json(); // JSON-Daten extrahieren
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json(errorData);
+    }
 
+    const data = await response.json();
+    console.log("✅ Artikel erfolgreich aktualisiert:", data);
+    res.status(200).json(data);
   } catch (error) {
-    console.error('Fehler:', error);
-    return []; // Rückgabe einer leeren Liste im Fehlerfall
+    console.error("❌ Fehler beim Weiterleiten:", error);
+    return res.status(500).json({ error: "Interner Serverfehler" });
   }
-}
-
-
-  
-
-
-
+});
 
 
 // Server starten

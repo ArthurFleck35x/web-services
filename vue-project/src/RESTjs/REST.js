@@ -4,7 +4,7 @@ var userID;
 
 var currencyRate = 1;
 
-var loggedIn = true;
+var loggedIn = false;
 
 var flagURL = "";
 
@@ -24,6 +24,14 @@ export function getCurrencyRate(){
   return currencyRate;
 }
 
+export function setCurrencyRate(rate){
+  currencyRate = rate;
+}
+
+export function getCurrency(){
+  return myCurrency;
+}
+
 export function getCurrencySymbol(){
   return myCurrencySymbol;
 }
@@ -34,7 +42,6 @@ export async function fetchArticles() {
       if (!response.ok) throw new Error('Fehler beim Abrufen der Daten');
   
       const data = await response.json(); // JSON-Daten extrahieren
-      console.log(data)
       return data; // Rückgabe der JSON-Objekte als Liste
     } catch (error) {
       console.error('Fehler:', error);
@@ -143,6 +150,8 @@ export async function fetchCurrencyRate(currency) {
     currencyRate = data.rate;
 
     myCurrencySymbol = data.currencySymbol;
+
+    return currencyRate;
 
   } catch (error) {
     console.error('Fehler:', error);

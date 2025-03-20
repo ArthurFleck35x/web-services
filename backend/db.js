@@ -12,6 +12,9 @@ const db = new sqlite3.Database(dbPath, (err) => {
   console.log("Erfolgreich mit der SQLite-Datenbank verbunden");
 });
 
+app.use(express.json()); // Middleware für JSON
+app.use(express.urlencoded({ extended: true })); // Falls Form-Data gesendet wird
+
 //ARTICLE SEARCH
 app.get("/searcharticles", (req, res) => {
   const { searchstring } = req.query; 

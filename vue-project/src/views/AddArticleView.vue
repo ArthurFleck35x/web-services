@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { createNewArticle } from '@/RESTjs/REST';
+import { createNewArticle, getCurrencyRate } from '@/RESTjs/REST';
 import { ref } from 'vue';
 
 const isErrorVisible = ref(false);
@@ -54,7 +54,10 @@ const submitArticle = () => {
         setTimeout(() => {
             isSuccessVisible.value = false;
         }, 2000);
-        createNewArticle(productForm.value.title,productForm.value.price,productForm.value.count,productForm.value.description);
+
+        var price = (productForm.value.price / getCurrencyRate).toFixed(2);
+
+        createNewArticle(productForm.value.title,price,productForm.value.count,productForm.value.description);
         clearProductForm();
     }else{
         errormessage.value = "Please input all information"

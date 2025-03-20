@@ -11,15 +11,48 @@
             <label for="selectedCurrency">Select preferred currency </label>
             <select v-model="selectedCurrency" @change="updateCurrencyRate">
                 <option v-for="currency in currencies" :key="currency" :value="currency">
-                    {{ currency }}
+                    {{ currency.toUpperCase() }}
                 </option>
             </select>
-            <p>Wechselkurs: {{ currencyRate }}</p>
-            <img v-if="flagURL" :src="flagURL" alt="Flag" class="flag-image" />
+            <img :src="flagUrl" alt="Flag" class="flag-image" />
             <p class="bottom5">Lets go to the market!</p>
         </div>
     </div>
 </template>
+
+<script setup>
+import { fetchCurrencyRate, fetchFlagURL, getCurrency, setCurrencyRate } from "@/RESTjs/REST.js";
+import { onMounted, ref } from "vue";
+
+// Daten für die View
+const selectedCurrency = ref("");
+const flagUrl = ref(""); // ref für reaktiven Wert
+const currencies = ["eur", "usd", "gbp", "jpy", "krw", "cny", "mxn"];
+
+// Funktion zum Abrufen des Wechselkurses
+async function updateCurrencyRate() {
+    try {
+        if (selectedCurrency.value !== "eur") {
+            const currencyRate = await fetchCurrencyRate(selectedCurrency.value);
+            setCurrencyRate(currencyRate);
+        } else {
+            setCurrencyRate(1);
+        }
+
+        // Flag-URL abrufen
+        flagUrl.value = await fetchFlagURL(selectedCurrency.value);
+    } catch (error) {
+        console.error("Fehler beim Laden der Währungsdaten:", error);
+    }
+}
+
+onMounted(async () => {
+    selectedCurrency.value = getCurrency();
+    flagUrl.value = await fetchFlagURL(selectedCurrency.value);
+});
+
+</script>
+
 <style scoped>
 /* Navbar */
 .navbar {
@@ -138,43 +171,3 @@ h4 {
     padding: 1rem;
 }
 </style>
-<script>
-import { fetchCurrencyRate, fetchFlagURL } from "@/RESTjs/REST.js";
-
-export default {
-    data() {
-        return {
-        selectedCurrency: "USD",
-        currencyRate: null,
-        flagURL: "",
-        currencies: ["USD", "EUR", "GBP", "JPY", "CHF", "CNY","MXN"]
-        };
-    },
-    methods: {
-        async updateCurrencyRate() {
-        try {
-            this.currencyRate = await fetchCurrencyRate(this.selectedCurrency);
-            const country = this.getCountryByCurrency(this.selectedCurrency);
-            this.flagURL = await fetchFlagURL(country);
-        } catch (error) {
-            console.error("Fehler beim Laden der Währungsdaten:", error);
-        }
-        },
-        getCountryByCurrency(currency) {
-        const currencyMap = {
-            "USD": "United States",
-            "EUR": "Germany",
-            "GBP": "United Kingdom",
-            "JPY": "Japan",
-            "CHF": "Switzerland",
-            "CNY": "China",
-            "MXN": "Mexico"
-        };
-        return currencyMap[currency] || "Unknown";
-        }
-    },
-    async mounted() {
-        await this.updateCurrencyRate();
-    }
-};
-</script>
