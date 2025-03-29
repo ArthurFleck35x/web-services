@@ -13,43 +13,56 @@
         </div>
 
         <main>
-            <div class="bg-dark2" >
-                <div>
-                    <h3 class="element">General</h3>
+            <div >
+                <div class="bg-dark2 center">
+                    <h3 class="element title ">General</h3>
                     <div>
-                    <h5>
+                    <h5 >
                         What is UniPlace?
                     </h5>
-                    <p>
+                    <p class="bottom2">
                         Uniplace is a marketplace where users can buy and sell both digital and real-world assets easily and securely.
                     </p>
                     </div>
                     <!--für die anderen anpassen-->
-                    <h3 class="element">Account</h3>
+                    <h3 class="element title">Account</h3>
                     <div>
+                    <h5 >
+                        Do I need to register to buy or sell something?
+                    </h5>
+                    <p class="bottom2">
+                        Yes, registration is required to sell items or to contact sellers.
+                    </p>
                     <h5>
                         How do I create an account?
                     </h5>
-                    <p>
+                    <p class="bottom2">
                         Simply sign up with your email, verify your identity, and start trading.
                     </p>
                     </div>
-                    <h3 class="element">Marketplace</h3>
+                    <h3 class="element title">Marketplace</h3>
                     <div>
                     <h5>
                         What can I buy and sell?
                     </h5>
-                    <p>
+                    <p class="bottom2">
                         You can trade a wide range of items, from in-game assets and NFTs to physical goods.
 
                     </p>
-                    </div>
-                    <h3 class="element">Support</h3>
-                    <div>
                     <h5>
+                        How can I buy?
+                    </h5>
+                    <p class="bottom2">
+                        For each article, the seller's email address appears so you can complete your purchases.
+
+                    </p>
+                    </div>
+                    <h3 class="element title">Support</h3>
+                    <div>
+                    <h5 >
                         How do I contact customer support?
                     </h5>
-                    <p>
+                    <p >
                         You can reach us through email.
                     </p>
                     </div>
@@ -59,16 +72,6 @@
     </div>
 </template>
 <style scoped>
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /*background-color: #2563eb;*/
-    padding: 1rem;
-    color: white;
-    position: relative;
-}
 section div {
     padding: 1rem;
     text-align: center;
@@ -76,8 +79,8 @@ section div {
 .bottom5{
     margin-bottom: 5rem
 }
-.top5{
-    margin-top: 5rem
+.bottom2{
+    margin-bottom: 2rem
 }
 /* Logo */
 .logo img {
@@ -102,67 +105,17 @@ h4 {
     color: white; /* Oder eine passende Farbe */
     text-align: center;
 }
-/*Schrift mittig*/
-.fonts {
-    text-align: center;
-}
+
 /* Zentriert den Text */
 .center {
     text-align: center;
 }
-/* weiße Schrift */
-.white {
-    color: white;
-}
-/* Burger-Menü Button */
-.menu-button {
-    font-size: 1.8rem;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: block; /* Immer sichtbar */
-}
 
-/* Dropdown-Menü */
-.dropdown {
-    position: absolute;
-    right: 1rem;
-    top: 3.5rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 150px;
-}
-
-/* Dropdown-Text schwarz machen */
-.dropdown li {
-    color: black;
-    padding: 10px;
-    cursor: pointer;
-    transition: background 0.2s;
-    list-style: none;
-}
-
-.dropdown li:hover {
-    background: #f1f1f1;
-}
-
-/* Für den Dark Mode Hintergrund */
-.bg-dark {
-    background: linear-gradient(to bottom right, #1a202c, #2d3748, #4a5568); /* Dark Gray to Slate */
-    color: white;
-}
 .bg-dark2 {
     background: linear-gradient(to bottom right, #1a202c, #2d3748); /* Dark Gray to Slate */
     color: white;
 }
 
-/* Für den Light Mode Hintergrund */
-.bg-light {
-    background: linear-gradient(to bottom right, #f7fafc, #ffffff, #edf2f7); /* Light Gray to White */
-    color: #1a202c;
-}
 /* Für den Spezialhintergrund */
 .bg-special {
     background: linear-gradient(to left, #5cbbca,#c59bec); /* Indigo to Blue-green */

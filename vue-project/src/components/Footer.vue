@@ -64,11 +64,5 @@ const currentYear = ref(new Date().getFullYear());
     -webkit-background-clip: text; /* Background-clip für den Text */
     color: transparent; /* Use a transparent text effect to show the background behind it */
 }
-/*a {
-    transition: color 0.3s;
-}
-a:hover {
-    color: #f8f9fa !important;
-}
-*/
+
 </style>

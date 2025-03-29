@@ -44,7 +44,7 @@
 
             <!-- Buttons -->
             <div class="popup-buttons">
-                <button class="delete-button" @click="deleteProduct(certainProduct.id)">Löschen</button>
+                <button class="delete-button " @click="deleteProduct(certainProduct.id)">Löschen</button>
                 <button class="edit-button" @click="toggleEditMode">{{ isEditing ? 'Speichern' : 'Bearbeiten' }}</button>
                 <button class="close-button" @click="closePopup">Schließen</button>
             </div>
@@ -148,8 +148,8 @@ onMounted(()=>{
 }
 
 .detailButton{
+    background:#333;
     color: white;
-    background-color: blue;
     padding: 10px 20px; /* Innenabstand */
     border: none; /* Kein Rand */
     border-radius: 5px; /* Abgerundete Ecken */
@@ -177,39 +177,38 @@ onMounted(()=>{
   text-align: center;
   color: black;
 }
-
 /* Buttons */
 .popup-buttons {
   display: flex;
   justify-content: space-around;
   margin-top: 15px;
 }
-
+.popup-buttons:hover {opacity: 1}
 .delete-button {
-  background: red;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+    background:  linear-gradient(to right, #22d3ee, #9333ea);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .edit-button {
-  background: orange;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+    background:  linear-gradient(to right, #22d3ee, #9333ea);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .close-button {
-  background: gray;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+    background:  linear-gradient(to right, #22d3ee, #9333ea);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 input, textarea {
