@@ -1,9 +1,8 @@
-version: '3.8'
 services:
   backend:
     build:
-      context: backend/MainBackend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/MainBackend/Dockerfile
     ports:
       - "5000:5000"
     volumes:
@@ -13,8 +12,8 @@ services:
 
   currency-exchange:
     build:
-      context: backend/exchange
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/exchange/Dockerfile
     ports:
       - "5001:5001"
     depends_on:
@@ -22,8 +21,8 @@ services:
 
   db-interaction:
     build:
-      context: backend/DB
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/DB/Dockerfile
     ports:
       - "5002:5002"
     volumes:
@@ -31,10 +30,10 @@ services:
 
   frontend:
     build:
-      context: vue-project  # Points to the Vue.js project
-      dockerfile: Dockerfile
+      context: ./vue-project  # Den Pfad zum vue-project-Ordner angeben
+      dockerfile: Dockerfile   # Wenn das Dockerfile im vue-project-Ordner ist
     ports:
-      - "8080:5000"
+      - "8080:5000"  # serve läuft standardmäßig auf Port 5000
     depends_on:
       - backend
 
