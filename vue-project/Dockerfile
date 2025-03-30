@@ -30,4 +30,4 @@ RUN npm install -g serve
 EXPOSE 5000
 
 # Command to run serve with fallback for history mode
-CMD ["serve", "-s", ".", "-l", "5000", "--single"]
+CMD ["serve", "-s", ".", "-l", "4900", "--single"]
