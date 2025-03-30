@@ -5,14 +5,6 @@ const fs = require("fs");
 
 const serverURL = "http://localhost:3001"
 const app = express();
-const dbPath = path.resolve(__dirname, "Marketplace_DB.db");
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error("Fehler beim Verbinden zur SQLite-Datenbank:", err.message);
-    return;
-  }
-  console.log("Erfolgreich mit der SQLite-Datenbank verbunden");
-});
 
 // Middleware zum Parsen von JSON aus requests
 app.use(express.json());
