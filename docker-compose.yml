@@ -33,7 +33,7 @@ services:
       context: ./vue-project  # Den Pfad zum vue-project-Ordner angeben
       dockerfile: Dockerfile   # Wenn das Dockerfile im vue-project-Ordner ist
     ports:
-      - "8080:5000"  # serve läuft standardmäßig auf Port 5000
+      - "8085:5000"  # serve läuft standardmäßig auf Port 5000
     depends_on:
       - backend
 
