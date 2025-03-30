@@ -1,10 +1,7 @@
-version: '3.8'
-
 services:
   backend:
-    build:
-      context: .
-      dockerfile: backend/MainBackend/Dockerfile
+    image: username/web-services-backend:latest
+    restart: unless-stopped
     ports:
       - "5000:5000"
     volumes:
@@ -13,29 +10,26 @@ services:
       - db-interaction
 
   currency-exchange:
-    build:
-      context: .
-      dockerfile: backend/exchange/Dockerfile
+    image: username/web-services-currency-exchange:latest
+    restart: unless-stopped
     ports:
       - "5001:5001"
     depends_on:
       - backend
 
   db-interaction:
-    build:
-      context: .
-      dockerfile: backend/DB/Dockerfile
+    image: username/web-services-db-interaction:latest
+    restart: unless-stopped
     ports:
       - "5002:5002"
     volumes:
       - sqlite-data:/app/database
 
   frontend:
-    build:
-      context: ./vue-project  # Den Pfad zum vue-project-Ordner angeben
-      dockerfile: Dockerfile   # Wenn das Dockerfile im vue-project-Ordner ist
+    image: username/web-services-frontend:latest
+    restart: unless-stopped
     ports:
-      - "8080:5000"  # serve läuft standardmäßig auf Port 5000
+      - "8080:5000"  # serve läuft auf Port 5000
     depends_on:
       - backend
 
