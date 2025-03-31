@@ -30,7 +30,77 @@ Im Rahmen dieses Projekts wurden verschiedene technische Aspekte realisiert, dar
 
 ## Systemarchitektur
 
-## Backend & API
+## Backendschnittstellen & API
+
+Das Backend wurde mit Node.js und Express.js entwickelt, um eine schnelle und effiziente API bereitzustellen. Es organisiert die verschiedenen Funktionen der Anwendung in Bereiche wie Benutzerverwaltung, Artikelverwaltung und Externe APIs. Ein zusätzliches Skript aktualisiert stündlich eine JSON-Datei mit den aktuellen Währungsraten, die das Backend für die Currency API nutzt. 
+
+### Benutzerverwaltung
+* POST /login
+  * Zweck: Diese Schnittstelle dient der Benutzeranmeldung. Sie überprüft die Anmeldedaten (E-Mail, Benutzername, Passwort) und stellt eine Benutzer-ID bereit, wenn die Anmeldung erfolgreich ist.
+  * Funktion: Authentifizierung eines Benutzers.
+ 
+* POST /register 
+  * Zweck: Diese Schnittstelle ermöglicht die Registrierung eines neuen Benutzers. Sie nimmt E-Mail, Benutzernamen und Passwort entgegen und erstellt ein Benutzerkonto. Nach der Registrierung erfolgt automatisch das Einloggen des Benutzers. 
+  * Funktion: Registrierung eines neuen Benutzers und automatische Anmeldung.
+ 
+### Artikelverwaltung 
+
+* GET /articles 
+
+  * Zweck: Diese Schnittstelle gibt eine Liste aller verfügbaren Artikel zurück. Sie wird verwendet, um alle Artikel aus der Datenbank abzurufen. 
+
+  * Funktion: Abrufen aller Artikel. 
+
+ 
+
+* GET /searcharticles 
+
+  * Zweck: Diese Schnittstelle ermöglicht die Suche nach Artikeln. Sie akzeptiert einen Suchbegriff (z.B. Titel oder Beschreibung) und gibt die entsprechenden Artikel zurück. 
+
+  * Funktion: Suche nach Artikeln basierend auf einem Suchbegriff. 
+
+ 
+
+* GET /myarticles 
+
+  * Zweck: Diese Schnittstelle gibt alle Artikel zurück, die einem bestimmten Benutzer gehören. Der Benutzer wird anhand seiner Benutzer-ID identifiziert. 
+
+  * Funktion: Abrufen der eigenen Artikel eines Benutzers. 
+
+ 
+* POST /newarticle 
+
+  * Zweck: Diese Schnittstelle wird verwendet, um einen neuen Artikel zu erstellen. Der Benutzer gibt die Artikeldaten (z. B. Titel, Preis, Menge, Beschreibung) an, und der Artikel wird in die Datenbank eingefügt. 
+
+  * Funktion: Erstellen eines neuen Artikels. 
+
+ 
+* PUT /updatearticle 
+
+  * Zweck: Diese Schnittstelle ermöglicht es, die Daten eines bestehenden Artikels zu aktualisieren. Der Artikel wird anhand seiner ID identifiziert, und die neuen Daten werden in die Datenbank übernommen. 
+
+  * Funktion: Aktualisieren eines Artikels. 
+
+
+* DELETE /deletearticle 
+
+  * Zweck: Diese Schnittstelle wird verwendet, um einen Artikel aus der Datenbank zu löschen. Der Artikel wird anhand seiner ID identifiziert und aus der Datenbank entfernt. 
+
+  * Funktion: Löschen eines Artikels.
+### Externe API 
+
+* GET /currency 
+
+  * Zweck: Diese Schnittstelle gibt den aktuellen Wechselkurs für eine angegebene Währung zurück. Der Client kann eine der unterstützten Währungen (z. B. EUR, USD, GBP) angeben, und die API liefert den entsprechenden Wechselkurs sowie das Währungssymbol. 
+
+  * Funktion: Abrufen des aktuellen Wechselkurses und Währungssymbols. 
+
+ 
+* GET /get-flag 
+
+  * Zweck: Diese Schnittstelle gibt die URL der Flagge eines Landes zurück, die zur angegebenen Währung gehört. Der Client kann die Währung angeben (z. B. EUR für Euro), und die API gibt die URL der entsprechenden Flagge zurück. 
+
+  * Funktion: Abrufen der URL der Flagge für eine angegebene Währung. 
 
 ## Datenbank 
 
