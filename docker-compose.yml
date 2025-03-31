@@ -4,7 +4,7 @@ services:
       context: ./vue-project
       dockerfile: Dockerfile   
     volumes:
-      - ./vue-projekt/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./vue-project/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - "8080:80"
     restart: always
