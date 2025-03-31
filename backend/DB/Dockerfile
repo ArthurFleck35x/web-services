@@ -8,11 +8,11 @@ COPY ../../package*.json ./
 RUN npm install --omit=dev
 
 # Copy all service-specific files into the container
-COPY . .
+COPY ./db.js /app/db.js
 
 # Expose the required port (modify per service)
-EXPOSE 5000
+EXPOSE 3001
 
 # Start the service
-CMD ["node", "server.js"]
+CMD ["node", "db.js"]
 

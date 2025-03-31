@@ -8,11 +8,11 @@ COPY ../../package*.json ./
 RUN npm install --omit=dev
 
 # Copy all service-specific files into the container
-COPY . .
+COPY ./fetchRates.js /app/fetchRates.js
 
 # Expose the required port (modify per service)
 EXPOSE 5001
 
 # Start the service
-CMD ["node", "server.js"]
+CMD ["node", "fetchRates.js"]
 

@@ -8,11 +8,11 @@ COPY ../../package*.json ./
 RUN npm install --omit=dev
 
 # Copy all service-specific files into the container
-COPY . .
+COPY ./backend.js /app/backend.js
 
 # Expose the required port (modify per service)
-EXPOSE 5002
+EXPOSE 3000
 
 # Start the service
-CMD ["node", "server.js"]
+CMD ["node", "backend.js"]
 
