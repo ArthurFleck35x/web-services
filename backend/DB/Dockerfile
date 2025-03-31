@@ -11,7 +11,7 @@ RUN npm install --omit=dev
 COPY . .
 
 # Expose the required port (modify per service)
-EXPOSE 5000
+EXPOSE 3001
 
 # Start the service
 CMD ["node", "db.js"]

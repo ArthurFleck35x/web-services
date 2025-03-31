@@ -11,7 +11,7 @@ RUN npm install --omit=dev
 COPY . .
 
 # Expose the required port (modify per service)
-EXPOSE 5002
+EXPOSE 3000
 
 # Start the service
 CMD ["node", "backend.js"]
