@@ -123,13 +123,18 @@ Das Frontend von UniPlace wurde mit Vue.js entwickelt und bietet eine benutzerfr
 
 #### Hauptkomponenten
 
-1. **SignUp.vue** - Benutzerregistrierung
-2. **ArticleView.vue** - Anzeige aller verfügbaren Produkte
-3. **AddArticleView.vue** - Hinzufügen neuer Produkte
-4. **MyArticlesView.vue** - Verwaltung eigener Produkte
+1. **AboutUs.vue** - Informationsseite über UniPlace
+2. **AddArticleView.vue** - Hinzufügen neuer Produkte
+3. **App.vue** - Aufbaukomponente
+4. **ArticleView.vue** - Anzeige aller verfügbaren Produkte
 5. **Currency.vue** - Währungsauswahl und -umrechnung
-6. **AboutUs.vue** - Informationsseite über UniPlace
-7. **Footer.vue** - Fußzeile mit Navigation und Copyright
+6. **Footer.vue** - Fußzeile mit Navigation und Copyright
+7. **LogIn.vue** - Benutzeranmeldung
+8. **Market.vue** - Artikel und Suchzeile
+9. **MyArticlesView.vue** - Verwaltung eigener Produkte
+10. **NavBar.vue** - Navigation und Bürgermenü
+11. **SearchBar.vue** -Suchzeile 
+12. **SignUp.vue** - Benutzerregistrierung
 
 ### Design-System
 
