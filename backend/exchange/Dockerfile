@@ -2,7 +2,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json from two levels up
-COPY ../../package*.json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install --omit=dev
