@@ -1,33 +1,22 @@
-# Build Stage
-FROM node:18-alpine AS build
-
+# 1. Basis-Image mit Node.js für den Build
+FROM node:18 AS build-stage
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# 2. Abhängigkeiten installieren
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# 3. Vue-Projekt bauen
 COPY . .
-
-# Build the app for production
 RUN npm run build
 
-# Serve Stage
-FROM node:18-alpine
+# 4. Neues Image mit Nginx für den Build-Output
+FROM nginx:alpine AS production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-WORKDIR /app
+# 5. Nginx-Konfiguration für Vue Router
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy the built files from the build stage
-COPY --from=build /app/dist /app
-
-# Install the 'serve' package globally
-RUN npm install -g serve
-
-# Expose port 5000 (default for serve)
-EXPOSE 5000
-
-# Command to run serve with fallback for history mode
-CMD ["serve", "-s", ".", "-l", "4900", "--single"]
+# 6. Expose Port
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
