@@ -14,5 +14,5 @@ COPY . .
 EXPOSE 5002
 
 # Start the service
-CMD ["node", "server.js"]
+CMD ["node", "backend.js"]
 

@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: backend/MainBackend/Dockerfile
     ports:
-      - "5000:5000"
+      - "3000:3000"
     volumes:
       - sqlite-data:/app/database
     depends_on:
@@ -18,15 +18,17 @@ services:
       - "5001:5001"
     depends_on:
       - backend
+    volumes:
+    - fetchRates.js:backend/exchange/exchange_rates.json
 
   db-interaction:
     build:
       context: .
       dockerfile: backend/DB/Dockerfile
     ports:
-      - "5002:5002"
+      - "3001:3001"
     volumes:
-      - sqlite-data:/app/database
+      - sqlite-data:/backend/DB/Marketplace_DB.db
 
   frontend:
     build:
@@ -39,3 +41,4 @@ services:
 
 volumes:
   sqlite-data:
+  fetchRates.js:

@@ -14,5 +14,5 @@ COPY . .
 EXPOSE 5001
 
 # Start the service
-CMD ["node", "server.js"]
+CMD ["node", "fetchRates.js"]
 
