@@ -1,8 +1,8 @@
 services:
   backend:
     build:
-      context: .
-      dockerfile: backend/MainBackend/Dockerfile
+      context: ./backend/MainBackend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
@@ -10,8 +10,8 @@ services:
 
   currency-exchange:
     build:
-      context: .
-      dockerfile: backend/exchange/Dockerfile
+      context: ./backend/exchange
+      dockerfile: Dockerfile
     ports:
       - "5001:5001"
     depends_on:
@@ -21,8 +21,8 @@ services:
 
   db-interaction:
     build:
-      context: .
-      dockerfile: backend/DB/Dockerfile
+      context: ./backend/DB
+      dockerfile: Dockerfile
     ports:
       - "3001:3001"
     volumes:
