@@ -30,9 +30,25 @@ Im Rahmen dieses Projekts wurden verschiedene technische Aspekte realisiert, dar
 
 ## Systemarchitektur
 
+![Architektur](https://github.com/user-attachments/assets/5490a395-9f83-47ac-8b23-4040b8fbdf20)
+
+Technologiestack:
+
+* Backend: JavaScript, Node.js, Express, SQLite
+
+* Frontend: Vue.js, HTML, CSS, JavaScript
+
+*    Deployment: Docker Engine, Docker Desktop
+
+*    Versionierung: GitHub, VSCode
+
+Der Client (z. B. Browser, mobile App) kommuniziert über eine Web-API (HTTP, JSON) mit dem Backend in Node.js, das Anfragen verarbeitet und mit einer SQLite-Datenbank interagiert. Ein Flag-Mechanismus steuert bestimmte Funktionen. Externe Kommunikation erfolgt über eine Exchange API für Integrationen. Zusammengefasst handelt es sich um ein REST-API-System, das JSON und SQLite nutzt.
+
+
 ## Backendschnittstellen & API
 
-Das Backend wurde mit Node.js und Express.js entwickelt, um eine schnelle und effiziente API bereitzustellen. Es organisiert die verschiedenen Funktionen der Anwendung in Bereiche wie Benutzerverwaltung, Artikelverwaltung und Externe APIs. Ein zusätzliches Skript aktualisiert stündlich eine JSON-Datei mit den aktuellen Währungsraten, die das Backend für die Currency API nutzt. 
+Das Backend wurde mit Node.js und Express.js entwickelt, um eine schnelle und effiziente API bereitzustellen. Es organisiert die verschiedenen Funktionen der Anwendung in Bereiche wie Benutzerverwaltung, Artikelverwaltung und Externe APIs. Ein zusätzliches Skript aktualisiert stündlich eine JSON-Datei mit den aktuellen Währungsraten, die das Backend für die Currency API nutzt,
+[siehe Swagger](https://app.swaggerhub.com/templates/webservice-c5f/dokumentation/1.0.2) .
 
 ### Benutzerverwaltung
 * POST /login
@@ -103,6 +119,16 @@ Das Backend wurde mit Node.js und Express.js entwickelt, um eine schnelle und ef
   * Funktion: Abrufen der URL der Flagge für eine angegebene Währung. 
 
 ## Datenbank 
+
+### Datenbanktyp
+
+Es wurde SQLite verwendet. Diese Entscheidung wurde aufgrund der Vorerfahrung des Teams sowie der einfachen Handhabung getroffen. Auch passt die Relationalität sehr gut zu unserem Anwendungsfall. 
+![Struktur](https://github.com/user-attachments/assets/17004ae9-3ce0-4b81-aaf8-d4d79f62b1f5)
+
+### Struktur
+
+Die Datenbank besteht aus zwei Tabellen. Zum einen das Artikeltabellenblatt und zum anderen das Kundentabellenblatt. Die beiden sind als Besitzer und Besitz verbunden. 
+Der Besitzer mit der "userid"  als Fremdschlüssel im Artikelvermerkt. 
 
 ## Frontend
 
