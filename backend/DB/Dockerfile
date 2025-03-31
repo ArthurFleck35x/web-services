@@ -8,7 +8,7 @@ COPY ../../package*.json ./
 RUN npm install --omit=dev
 
 # Copy all service-specific files into the container
-COPY . .
+COPY ./db.js /app/db.js
 
 # Expose the required port (modify per service)
 EXPOSE 3001
