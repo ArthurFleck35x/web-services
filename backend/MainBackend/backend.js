@@ -38,7 +38,7 @@ app.get("/api/get-flag", (req, res) => {
 });
 
 //Route um Währung umzurechnen
-const FILE_PATH = path.join(__dirname, "exchange_rates.json");
+const FILE_PATH = path.join(__dirname, "../exchange/exchange_rates.json");
 
 const currencySymbols = {
   eur: "€",

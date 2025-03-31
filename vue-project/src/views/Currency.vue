@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { fetchCurrencyRate, fetchFlagURL, getCurrency, setCurrencyRate } from "@/RESTjs/REST.js";
+import { fetchCurrencyRate, fetchFlagURL, getCurrency, setCurrency, setCurrencyRate, setCurrencySymbol } from "@/RESTjs/REST.js";
 import { onMounted, ref } from "vue";
 
 // Daten für die View
@@ -34,10 +34,11 @@ const currencies = ["eur", "usd", "gbp", "jpy", "krw", "cny", "mxn"];
 async function updateCurrencyRate() {
     try {
         if (selectedCurrency.value !== "eur") {
-            const currencyRate = await fetchCurrencyRate(selectedCurrency.value);
-            setCurrencyRate(currencyRate);
+            await fetchCurrencyRate(selectedCurrency.value);
         } else {
             setCurrencyRate(1);
+            setCurrency(selectedCurrency.value);
+            setCurrencySymbol("€");
         }
 
         // Flag-URL abrufen

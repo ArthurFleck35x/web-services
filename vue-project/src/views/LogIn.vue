@@ -138,7 +138,7 @@
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import CryptoJS from "crypto-js";
-import { checkLoginData } from "@/RESTjs/REST";
+import { checkLoginData, fetchCurrencyRate, setCurrency, setCurrencyRate, setCurrencySymbol } from "@/RESTjs/REST";
 
 const router = useRouter();
 
@@ -199,16 +199,23 @@ function checkValues(){
 }
 
 function sendLoginData(){
-  checkLoginData(email.value,username.value,hashedPassword.value).then(success => {
-    if(success){
+  checkLoginData(email.value,username.value,hashedPassword.value).then(data => {
+    if(data.success){
       successmessage.value = "Login successfull"
       isSuccessVisible.value = true;
   
       setTimeout(() => {
         isSuccessVisible.value = false;
-      }, 2000);
+        if(data.currency == "eur"){
+          setCurrency("eur");
+          setCurrencyRate(1);
+          setCurrencySymbol("€")
+        }else{
+          fetchCurrencyRate(data.currency);
+        }
 
-      router.push("/market")
+        router.push("/market")
+      }, 2000);
     }else{
       errormessage.value = "User and/or Password wrong";
       openPopup();

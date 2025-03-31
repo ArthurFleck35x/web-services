@@ -55,7 +55,7 @@ const submitArticle = () => {
             isSuccessVisible.value = false;
         }, 2000);
 
-        var price = (productForm.value.price / getCurrencyRate).toFixed(2);
+        var price = (productForm.value.price / getCurrencyRate()).toFixed(2);
 
         createNewArticle(productForm.value.title,price,productForm.value.count,productForm.value.description);
         clearProductForm();

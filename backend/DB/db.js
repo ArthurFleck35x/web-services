@@ -178,8 +178,7 @@ app.post('/login', (req, res) => {
   if (!email || !username || !password) {
       return res.status(400).json({ error: 'Email, Benutzername und Passwort erforderlich' });
   }
-
-  const query = `SELECT * FROM user WHERE email = ? AND username = ?`;
+  const query = `SELECT user_id, COALESCE(currency, 'eur') AS currency, password  FROM user WHERE email = ? AND username = ?`;
 
   db.get(query, [email, username], (err, user) => {
       if (err) {
@@ -188,9 +187,8 @@ app.post('/login', (req, res) => {
       if (!user) {
           return res.status(401).json({ error: 'Ungültige Anmeldedaten' });
       }
-
       if(password==user.password){
-        res.status(200).json({ message: 'Login erfolgreich', userId: user.user_id });
+        res.status(200).json({ success: true, userId: user.user_id, currency: user.currency });
       }else{
         return res.status(401).json({ error: 'Ungültige Anmeldedaten' });
       }
@@ -198,7 +196,7 @@ app.post('/login', (req, res) => {
 });
 //REGISTER USER
 app.post('/register', (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, currency } = req.body;
 
   // Überprüfen, ob alle Felder vorhanden sind
   if (!username || !email || !password) {
@@ -216,8 +214,8 @@ app.post('/register', (req, res) => {
       }
 
       // Neuen Benutzer in die Datenbank einfügen (Passwort ist bereits gehasht)
-      const insertQuery = 'INSERT INTO user (username, email, password) VALUES (?, ?, ?)';
-      db.run(insertQuery, [username, email, password], function (err) {
+      const insertQuery = 'INSERT INTO user (username, email, password, currency) VALUES (?, ?, ?, ?)';
+      db.run(insertQuery, [username, email, password, currency], function (err) {
           if (err) {
               return res.status(500).json({ error: 'Fehler beim Registrieren des Benutzers' });
           }

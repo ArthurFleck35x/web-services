@@ -77,7 +77,18 @@
                     </svg>
                 </div>
             </div>
-
+            <div class="right element">
+                <div>
+                    <label for="selectedCurrency">Select preferred currency </label>
+                </div>
+                <div>
+                    <select  v-model="selectedCurrency">
+                        <option v-for="currency in currencies" :key="currency" :value="currency">
+                            {{ currency.toUpperCase() }}
+                        </option>
+                    </select>
+                </div>
+            </div>
             <button class="right element button" @click="signUp">
                 <span>Sign Up</span>
             </button>
@@ -111,7 +122,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { registerUser } from "@/RESTjs/REST";
+import { registerUser, setCurrency, setCurrencyRate, setCurrencySymbol, fetchCurrencyRate } from "@/RESTjs/REST";
 import CryptoJS from "crypto-js";
 
 const router = useRouter();
@@ -128,6 +139,9 @@ const userNameEmpty = ref(false);
 
 const password = ref('');
 const passwordEmpty = ref(false)
+
+const selectedCurrency = ref("eur");
+const currencies = ["eur", "usd", "gbp", "jpy", "krw", "cny", "mxn"];
 
 const hashedPassword = ref('');
 
@@ -173,16 +187,23 @@ function checkValues(){
 }
 
 function sendSignUpData(){
-  registerUser(email.value,username.value,hashedPassword.value).then(success=>{
+  registerUser(email.value,username.value,hashedPassword.value,selectedCurrency.value).then(success=>{
     if(success){
         successmessage.value = "Successfully signed in"
         isSuccessVisible.value = true;
   
         setTimeout(() => {
             isSuccessVisible.value = false;
-        }, 2000);
+            if(selectedCurrency.value == "eur"){
+                setCurrency("eur");
+                setCurrencyRate(1);
+                setCurrencySymbol("€");
+            }else{
+                fetchCurrencyRate(selectedCurrency.value);
+            }
 
-        router.push("/market")
+            router.push("/market")
+        }, 2000);
     }else{
         errormessage.value = "Username or email already exists" 
         openPopup();

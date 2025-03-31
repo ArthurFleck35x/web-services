@@ -8,7 +8,7 @@ var loggedIn = false;
 
 var flagURL = "";
 
-var myCurrency = "eur"
+var myCurrency = ""
 
 var myCurrencySymbol = "€"
 
@@ -28,12 +28,20 @@ export function setCurrencyRate(rate){
   currencyRate = rate;
 }
 
+export function setCurrency(currency){
+  myCurrency = currency;
+}
+
 export function getCurrency(){
   return myCurrency;
 }
 
 export function getCurrencySymbol(){
   return myCurrencySymbol;
+}
+
+export function setCurrencySymbol(symbol){
+  myCurrencySymbol = symbol;
 }
 
 export async function fetchArticles() {
@@ -100,7 +108,7 @@ export async function checkLoginData(email,username,password) {
 
     setLoggedIn(true);
 
-    return true;
+    return data;
 
   } catch (error) {
     console.error('Fehler:', error);
@@ -108,7 +116,7 @@ export async function checkLoginData(email,username,password) {
   }
 }
 
-export async function registerUser(email,username,password) {
+export async function registerUser(email,username,password,currency) {
   try {
     const response = await fetch(serverURL+"/register",{
       method: "POST",
@@ -116,7 +124,8 @@ export async function registerUser(email,username,password) {
       body: JSON.stringify({
         "email": email,
         "username": username,
-        "password": password
+        "password": password,
+        "currency": currency
       }),
     }); // Beispiel-API
     if (!response.ok) throw new Error('Fehler beim Abrufen der Daten: ' + response.json().error);
